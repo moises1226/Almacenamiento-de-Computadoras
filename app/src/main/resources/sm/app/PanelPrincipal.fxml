@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1016.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.app.HelloController">
+   <children>
+      <AnchorPane layoutY="2.0" onDragDetected="#Mostrar_tabla" prefHeight="687.0" prefWidth="163.0">
+         <children>
+            <Button focusTraversable="false" layoutX="24.0" layoutY="344.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Ingresar" />
+            <Button fx:id="btn_tabla" focusTraversable="false" layoutX="24.0" layoutY="442.0" mnemonicParsing="false" onAction="#Mostrar_tabla" prefHeight="37.0" prefWidth="109.0" text="Tabla" />
+            <Button focusTraversable="false" layoutX="24.0" layoutY="237.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Escanear" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1.0" prefHeight="122.0" prefWidth="1054.0">
+         <children>
+            <Button focusTraversable="false" layoutX="713.0" layoutY="41.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Buscar" />
+            <Button focusTraversable="false" layoutX="879.0" layoutY="42.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Eliminar" />
+         </children></AnchorPane>
+      <TableView fx:id="tabla" layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0" visible="false">
+        <columns>
+          <TableColumn prefWidth="443.0" text="C1" />
+          <TableColumn minWidth="0.0" prefWidth="423.0" text="C2" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0">
+         <children>
+            <TextField fx:id="nombre_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="90.0" pickOnBounds="false" prefHeight="37.0" prefWidth="234.0" scaleShape="false" />
+            <Spinner fx:id="nro_carrito" editable="true" layoutX="698.0" layoutY="114.0" onDragDetected="#initialize" prefHeight="26.0" prefWidth="102.0" />
+            <Label layoutX="76.0" layoutY="53.0" prefHeight="37.0" prefWidth="211.0" text="Nombre del responsable:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="698.0" layoutY="90.0" prefHeight="18.0" prefWidth="94.0" text="Nro de Carrito" />
+            <Label layoutX="71.0" layoutY="159.0" prefHeight="22.0" prefWidth="52.0" text="Curso">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="698.0" layoutY="28.0" mnemonicParsing="false" text="+ Agregar Carrito" />
+            <TextField fx:id="curso" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="181.0" pickOnBounds="false" prefHeight="37.0" prefWidth="86.0" scaleShape="false" />
+            <Button fx:id="btn_enviar" layoutX="629.0" layoutY="284.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="163.0" text="Enviar">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Spinner fx:id="nro_compu" editable="true" layoutX="71.0" layoutY="273.0" onDragDetected="#initialize" prefHeight="37.0" prefWidth="125.0" />
+            <Label fx:id="nro_compu" layoutX="71.0" layoutY="251.0" prefHeight="22.0" prefWidth="163.0" text="Nro de computadora">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
