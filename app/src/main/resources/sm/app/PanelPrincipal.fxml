@@ -14,7 +14,7 @@
    <children>
       <AnchorPane layoutY="2.0" onDragDetected="#Mostrar_tabla" prefHeight="687.0" prefWidth="163.0">
          <children>
-            <Button focusTraversable="false" layoutX="24.0" layoutY="344.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Ingresar" />
+            <Button focusTraversable="false" layoutX="24.0" layoutY="344.0" mnemonicParsing="false" onAction="#registrar_Compu" prefHeight="37.0" prefWidth="109.0" text="Ingresar" />
             <Button fx:id="btn_tabla" focusTraversable="false" layoutX="24.0" layoutY="442.0" mnemonicParsing="false" onAction="#Mostrar_tabla" prefHeight="37.0" prefWidth="109.0" text="Tabla" />
             <Button focusTraversable="false" layoutX="24.0" layoutY="237.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Escanear" />
          </children>
@@ -30,32 +30,43 @@
           <TableColumn minWidth="0.0" prefWidth="423.0" text="C2" />
         </columns>
       </TableView>
-      <AnchorPane layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0">
+      <AnchorPane fx:id="panel_Registro" layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0">
          <children>
             <TextField fx:id="nombre_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="90.0" pickOnBounds="false" prefHeight="37.0" prefWidth="234.0" scaleShape="false" />
-            <Spinner fx:id="nro_carrito" editable="true" layoutX="698.0" layoutY="114.0" onDragDetected="#initialize" prefHeight="26.0" prefWidth="102.0" />
+            <Spinner editable="true" layoutX="698.0" layoutY="114.0" prefHeight="26.0" prefWidth="102.0" />
             <Label layoutX="76.0" layoutY="53.0" prefHeight="37.0" prefWidth="211.0" text="Nombre del responsable:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
             <Label layoutX="698.0" layoutY="90.0" prefHeight="18.0" prefWidth="94.0" text="Nro de Carrito" />
-            <Label layoutX="71.0" layoutY="159.0" prefHeight="22.0" prefWidth="52.0" text="Curso">
+            <Label layoutX="71.0" layoutY="218.0" prefHeight="22.0" prefWidth="52.0" text="Curso">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
             <Button layoutX="698.0" layoutY="28.0" mnemonicParsing="false" text="+ Agregar Carrito" />
-            <TextField fx:id="curso" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="181.0" pickOnBounds="false" prefHeight="37.0" prefWidth="86.0" scaleShape="false" />
-            <Button fx:id="btn_enviar" layoutX="629.0" layoutY="284.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="163.0" text="Enviar">
+            <TextField cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="240.0" pickOnBounds="false" prefHeight="37.0" prefWidth="86.0" scaleShape="false" />
+            <Button fx:id="btn_enviar" layoutX="561.0" layoutY="244.0" mnemonicParsing="false" onAction="#btn_Enviar" prefHeight="122.0" prefWidth="163.0" text="Enviar">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Spinner fx:id="nro_compu" editable="true" layoutX="71.0" layoutY="273.0" onDragDetected="#initialize" prefHeight="37.0" prefWidth="125.0" />
-            <Label fx:id="nro_compu" layoutX="71.0" layoutY="251.0" prefHeight="22.0" prefWidth="163.0" text="Nro de computadora">
+            <Spinner editable="true" layoutX="76.0" layoutY="327.0" prefHeight="37.0" prefWidth="125.0" />
+            <Label layoutX="76.0" layoutY="305.0" prefHeight="22.0" prefWidth="163.0" text="Nro de computadora">
                <font>
                   <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="apellido_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="71.0" layoutY="172.0" pickOnBounds="false" prefHeight="37.0" prefWidth="234.0" scaleShape="false" />
+            <Label layoutX="71.0" layoutY="140.0" prefHeight="37.0" prefWidth="211.0" text="Apellido del responsable:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="TextoEnviado" layoutX="568.0" layoutY="427.0" text="ENVIADO" textFill="#3cff00" visible="false">
+               <font>
+                  <Font size="34.0" />
                </font>
             </Label>
          </children>
