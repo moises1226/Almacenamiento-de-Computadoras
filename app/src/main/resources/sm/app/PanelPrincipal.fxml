@@ -26,8 +26,10 @@
          </children></AnchorPane>
       <TableView fx:id="tabla" layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0" visible="false">
         <columns>
-          <TableColumn prefWidth="443.0" text="C1" />
-          <TableColumn minWidth="0.0" prefWidth="423.0" text="C2" />
+          <TableColumn fx:id="col1" prefWidth="208.0" text="C1" />
+          <TableColumn fx:id="col2" minWidth="0.0" prefWidth="262.0" text="C2" />
+            <TableColumn prefWidth="81.0" text="Curso" />
+            <TableColumn prefWidth="315.0" text="Descripcion" />
         </columns>
       </TableView>
       <AnchorPane fx:id="panel_Registro" layoutX="149.0" layoutY="122.0" prefHeight="567.0" prefWidth="867.0">
