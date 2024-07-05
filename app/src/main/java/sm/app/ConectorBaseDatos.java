@@ -13,13 +13,14 @@ public class ConectorBaseDatos {
     private static final String password = "123456";
 
 
-    public static Connection getConexion() throws Exception {
+    public Connection getConexion(){
 
         try {
             return DriverManager.getConnection(url, usuario, password);
 
         } catch (Exception e) {
-            throw new Exception("No se pudo conectar a la base de datos");
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo conectar a la base de datos", e);
         }
 
     }
