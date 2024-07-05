@@ -2,13 +2,17 @@ package sm.app;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class HelloController {
@@ -17,7 +21,8 @@ public class HelloController {
     @FXML
     private Button btn_Table;
     @FXML
-    private TableView tabla;
+    private TableView<Usuarios> tabla;
+
 
     @FXML
     public void Mostrar_tabla(){
@@ -95,6 +100,7 @@ public class HelloController {
             ins_dt.executeUpdate();
             mostrarMensajeExito();
             limpiarDatos();
+            CargarRegistro_tabla();
 
 
 
@@ -122,16 +128,66 @@ public class HelloController {
 
     }
 
+    @FXML
+    private TableColumn<Usuarios, String> col1;
+    @FXML
+    private TableColumn<Usuarios, String> col2;
 
-    private void mostrarRegistro(){
+    public void initialize() {
+        incializarColumnas();
+        CargarRegistro_tabla();
+    }
+
+    public void incializarColumnas(){
+
+        col1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+
+
+    }
+
+    private void CargarRegistro_tabla(){
+
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+
+        try {
+
+            Connection connection = conexion.getConexion();
+            String consult = "SELECT nombre, apellido FROM Usuarios";
+            PreparedStatement consulta = connection.prepareStatement(consult);
+            ResultSet muestraResultado = consulta.executeQuery(consult);
+
+            ObservableList<Usuarios> datos = FXCollections.observableArrayList();
+
+            while(muestraResultado.next()){
+
+                String nombre = muestraResultado.getString("nombre");
+                String apellido = muestraResultado.getString("apellido");
+                datos.add(new Usuarios(nombre, apellido));
+
+            }
+
+            tabla.setItems(datos);
 
 
 
 
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Error al cargar datos");
+        }
 
 
 
     }
+
+
+
+
+
+
+
+
 
 
 
