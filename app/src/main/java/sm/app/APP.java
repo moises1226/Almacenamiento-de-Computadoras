@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class APP extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PanelPrincipal.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(APP.class.getResource("PanelPrincipal.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1016, 687);
         stage.setTitle("Guardado de Computadoras");
         stage.setScene(scene);
@@ -19,5 +19,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+
+
     }
 }

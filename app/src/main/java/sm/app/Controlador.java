@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class HelloController {
+public class Controlador {
 
 
     @FXML
@@ -69,6 +70,8 @@ public class HelloController {
     private TextField curso;
     @FXML
     private Spinner<Integer> nro_compu;
+    @FXML
+    private Pane panelError;
 
     @FXML
     private void btn_Enviar(){
@@ -80,9 +83,16 @@ public class HelloController {
 //        int nro_Carrito = this.nro_carrito.getValue();
 //        int nro_compu = this.nro_compu.getValue();
 
-        GuardadoDeDatos(nombre, apellido);
+       if(nombre.isEmpty() || apellido.isEmpty()){
 
+           panelError.setVisible(true);
 
+       }else{
+
+           GuardadoDeDatos(nombre, apellido);
+           panelError.setVisible(false);
+
+        }
     }
 
     public void GuardadoDeDatos(String nombre, String apellido) {
@@ -101,6 +111,7 @@ public class HelloController {
             mostrarMensajeExito();
             limpiarDatos();
             CargarRegistro_tabla();
+
 
 
 
@@ -129,9 +140,11 @@ public class HelloController {
     }
 
     @FXML
-    private TableColumn<Usuarios, String> col1;
+    private TableColumn<Usuarios, Integer> col1;
     @FXML
     private TableColumn<Usuarios, String> col2;
+    @FXML
+    private TableColumn<Usuarios, String> col3;
 
     public void initialize() {
         incializarColumnas();
@@ -139,9 +152,9 @@ public class HelloController {
     }
 
     public void incializarColumnas(){
-
-        col1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        col1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("apellido"));
 
 
     }
@@ -149,6 +162,7 @@ public class HelloController {
     private void CargarRegistro_tabla(){
 
         ConectorBaseDatos conexion = new ConectorBaseDatos();
+        int id = 0;
 
         try {
 
@@ -160,10 +174,10 @@ public class HelloController {
             ObservableList<Usuarios> datos = FXCollections.observableArrayList();
 
             while(muestraResultado.next()){
-
+                id++;
                 String nombre = muestraResultado.getString("nombre");
                 String apellido = muestraResultado.getString("apellido");
-                datos.add(new Usuarios(nombre, apellido));
+                datos.add(new Usuarios(id,nombre, apellido));
 
             }
 
