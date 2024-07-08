@@ -1,0 +1,39 @@
+#nro_compu {
+
+    -fx-font-size: 14px;
+
+}
+
+#nro_compu .increment-arrow-button{
+    -fx-background-color: blue;
+    -fx-text-fill: red;
+}
+
+#nro_compu .increment-arrow-button .increment-arrow {
+    -fx-background-color: white;
+}
+
+
+
+#nro_compu .decrement-arrow-button {
+    -fx-background-color: red;
+
+}
+#nro_compu .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: white;
+
+}
+
+
+#tabla{
+    -fx-background-color: red;
+}
+
+ #col1{
+    -fx-background-color: green;
+}
+
+.column-header {
+    -fx-background-color: red; /* Color de fondo del encabezado de las columnas */
+    -fx-text-fill: white; /* Color del texto en el encabezado de las columnas */
+}

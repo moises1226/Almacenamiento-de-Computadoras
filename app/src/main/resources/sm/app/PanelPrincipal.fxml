@@ -46,15 +46,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
          </children></AnchorPane>
-      <TableView fx:id="tabla" cacheHint="QUALITY" depthTest="ENABLE" focusTraversable="false" layoutX="173.0" layoutY="114.0" pickOnBounds="false" prefHeight="567.0" prefWidth="857.0">
+      <TableView fx:id="tabla" cacheHint="QUALITY" depthTest="ENABLE" focusTraversable="false" layoutX="173.0" layoutY="114.0" pickOnBounds="false" prefHeight="567.0" prefWidth="857.0" stylesheets="@Panel.css">
         <columns>
-          <TableColumn fx:id="col1" prefWidth="30.0" text="ID" />
-          <TableColumn fx:id="col2" editable="false" minWidth="0.0" prefWidth="143.0" sortable="false" text="Nombre" />
-            <TableColumn fx:id="col3" editable="false" minWidth="0.0" prefWidth="160.0" sortable="false" text="Apellido" />
-            <TableColumn fx:id="col4" editable="false" minWidth="0.0" prefWidth="79.0" sortable="false" text="Curso" />
-            <TableColumn fx:id="col5" editable="false" prefWidth="127.0" sortable="false" text="N° Computadora" />
-            <TableColumn fx:id="col6" editable="false" prefWidth="85.0" sortable="false" style="-fx-text-fill: red;" text="N° Carrito" />
-            <TableColumn fx:id="col7" prefWidth="223.0" text="Descripcion" />
+          <TableColumn id="col1" fx:id="col1" prefWidth="30.0" text="ID" />
+          <TableColumn id="col2" fx:id="col2" editable="false" minWidth="0.0" prefWidth="143.0" sortable="false" text="Nombre" />
+            <TableColumn id="col3" fx:id="col3" editable="false" minWidth="0.0" prefWidth="160.0" sortable="false" text="Apellido" />
+            <TableColumn id="col4" fx:id="col4" editable="false" minWidth="0.0" prefWidth="79.0" sortable="false" text="Curso" />
+            <TableColumn id="col5" fx:id="col5" editable="false" prefWidth="127.0" sortable="false" text="N° Computadora" />
+            <TableColumn id="col6" fx:id="col6" editable="false" prefWidth="85.0" sortable="false" style="-fx-text-fill: red;" text="N° Carrito" />
+            <TableColumn id="col7" fx:id="col7" prefWidth="223.0" text="Descripcion" />
         </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -101,7 +101,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Spinner fx:id="nro_compu" editable="true" focusTraversable="false" layoutX="516.0" layoutY="66.0" prefHeight="49.0" prefWidth="163.0" />
+            <Spinner fx:id="nro_compu" editable="true" focusTraversable="false" layoutX="516.0" layoutY="66.0" prefHeight="49.0" prefWidth="163.0" style="-fx-font-size: 18;" stylesheets="@Panel.css" />
             <Label layoutX="514.0" layoutY="31.0" prefHeight="37.0" prefWidth="173.0" text="Nro de computadora">
                <font>
                   <Font name="Noto Sans Osmanya Regular" size="17.0" />
