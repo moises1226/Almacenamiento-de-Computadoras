@@ -26,11 +26,11 @@
 
 
 #tabla{
-
+    -fx-background-color: red;
 }
 
  #col1{
-
+    -fx-background-color: green;
 }
 
 .column-header {
