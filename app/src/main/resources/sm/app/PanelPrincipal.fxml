@@ -83,7 +83,10 @@
                   <Font size="15.0" />
                </font>
             </TextArea>
-            <TextField fx:id="nombre_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="54.0" pickOnBounds="false" prefHeight="49.0" prefWidth="257.0" scaleShape="false" stylesheets="@Panel.css" />
+            <TextField fx:id="nombre_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="54.0" pickOnBounds="false" prefHeight="49.0" prefWidth="257.0" scaleShape="false" stylesheets="@Panel.css">
+               <font>
+                  <Font size="19.0" />
+               </font></TextField>
             <Spinner fx:id="nro_carrito" editable="true" focusTraversable="false" layoutX="696.0" layoutY="54.0" prefHeight="68.0" prefWidth="157.0" style="-fx-font-size: 20px;" stylesheets="@Panel.css" />
             <Label layoutX="24.0" layoutY="17.0" prefHeight="37.0" prefWidth="266.0" text="Nombre del responsable:" textFill="WHITE">
                <font>
@@ -99,7 +102,10 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <TextField fx:id="curso" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="136.0" pickOnBounds="false" prefHeight="37.0" prefWidth="109.0" scaleShape="false" />
+            <TextField fx:id="curso" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="136.0" pickOnBounds="false" prefHeight="37.0" prefWidth="109.0" scaleShape="false">
+               <font>
+                  <Font size="17.0" />
+               </font></TextField>
             <Button fx:id="btn_enviar" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="525.0" layoutY="449.0" mnemonicParsing="false" onAction="#btn_Enviar" prefHeight="81.0" prefWidth="308.0" scaleShape="false" stylesheets="@Panel.css" text="Registrar" textFill="WHITE">
                <font>
                   <Font size="23.0" />
