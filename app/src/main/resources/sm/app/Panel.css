@@ -1,11 +1,11 @@
-#nro_compu {
+nro_compu {
 
     -fx-font-size: 14px;
 
 }
 
 #nro_compu .increment-arrow-button{
-    -fx-background-color: blue;
+    -fx-background-color: rgb(39, 253, 146);
     -fx-text-fill: red;
 }
 
@@ -16,7 +16,7 @@
 
 
 #nro_compu .decrement-arrow-button {
-    -fx-background-color: red;
+    -fx-background-color: rgb(108, 34, 228);
 
 }
 #nro_compu .decrement-arrow-button .decrement-arrow {
@@ -25,7 +25,28 @@
 }
 
 
+
 #tabla{
+
+}
+
+#nro_carrito .increment-arrow-button{
+    -fx-background-color: rgb(39, 253, 146);
+    -fx-text-fill: red;
+}
+
+#nro_carrito .increment-arrow-button .increment-arrow {
+    -fx-background-color: white;
+}
+
+
+
+#nro_compu .decrement-arrow-button {
+    -fx-background-color: rgb(108, 34, 228);
+
+}
+#nro_carrito .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: white;
 
 }
 
@@ -37,3 +58,17 @@
     -fx-background-color: red; /* Color de fondo del encabezado de las columnas */
     -fx-text-fill: white; /* Color del texto en el encabezado de las columnas */
 }
+
+#panel_Registro {
+    -fx-background-color: rgba(0, 0, 0, 0.747);
+
+    }
+
+
+#campo_Descripcion {
+    -fx-background-color: rgb(174, 165, 230);
+    }
+
+    #btn_enviar{
+        -fx-background-color: rgb(211, 67, 67);
+        }
