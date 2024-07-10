@@ -15,12 +15,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Controlador {
 
     @FXML
     private TableView<Usuarios> tabla;
-
 
     @FXML
     public void Mostrar_tabla(){
@@ -66,8 +67,6 @@ public class Controlador {
     @FXML
     private TextField nombre_Respo;
     @FXML
-    private TextField apellido_Respo;
-    @FXML
     private TextArea campo_Descripcion;
 
     @FXML
@@ -77,40 +76,40 @@ public class Controlador {
     private void btn_Enviar(){
 
         String nombre = nombre_Respo.getText();
-        String apellido = apellido_Respo.getText();
         String curso = this.curso.getText();
         long nro_Carrito = this.nro_carrito.getValue();
         int nro_compu = this.nro_compu.getValue();
         String descripcion = campo_Descripcion.getText();
+        String entrega = fechaHora.getText();
 
-       if(nombre.isEmpty() || apellido.isEmpty() || curso.isEmpty() || nro_compu == 0 || nro_Carrito == 0){
+       if(nombre.isEmpty()  || curso.isEmpty() || nro_compu == 0 || nro_Carrito == 0 || entrega.isEmpty()){
 
            panelError.setVisible(true);
 
        }else{
 
-           GuardadoDeDatos(nombre, apellido, curso, nro_compu, nro_Carrito, descripcion);
+           GuardadoDeDatos(nombre, curso, nro_compu, nro_Carrito, descripcion, entrega);
 
            panelError.setVisible(false);
 
         }
     }
 
-    public void GuardadoDeDatos(String nombre, String apellido, String curso, int nro_compu, long nro_Carrito, String descripcion) {
+    public void GuardadoDeDatos(String nombre, String curso, int nro_compu, long nro_Carrito, String descripcion, String entrega) {
 
         ConectorBaseDatos conexion = new ConectorBaseDatos();
 
 
         try {
             Connection connection = conexion.getConexion();
-            String insertDatos = "INSERT INTO Usuarios(nombre, apellido, curso , nro_Compu, descripcion, nro_Carrito) VALUES(? , ?, ?, ?, ?, ?)";
+            String insertDatos = "INSERT INTO Usuarios(nombre,curso , nro_Compu, descripcion, nro_Carrito, entrega) VALUES(? ,?, ?, ?, ?, ?)";
             PreparedStatement ins_dt = connection.prepareStatement(insertDatos);
             ins_dt.setString(1, nombre);
-            ins_dt.setString(2, apellido);
-            ins_dt.setString(3, curso);
-            ins_dt.setInt(4, nro_compu);
-            ins_dt.setString(5, descripcion);
-            ins_dt.setLong(6, nro_Carrito);
+            ins_dt.setString(2, curso);
+            ins_dt.setInt(3, nro_compu);
+            ins_dt.setString(4, descripcion);
+            ins_dt.setLong(5, nro_Carrito);
+            ins_dt.setString(6, entrega);
 
             ins_dt.executeUpdate();
             mostrarMensajeExito();
@@ -139,8 +138,8 @@ public class Controlador {
 
     private void limpiarDatos(){
 
-        nombre_Respo.setText("");
-        apellido_Respo.setText("");
+        nro_compu.getValueFactory().setValue(0);
+
 
     }
 
@@ -158,6 +157,11 @@ public class Controlador {
     private TableColumn<Usuarios, String> col6;
     @FXML
     private TableColumn<Usuarios, String> col7;
+    @FXML
+    private TableColumn<Usuarios, String> col8;
+
+
+
 
     public void initialize() {
         Spinner();
@@ -165,14 +169,18 @@ public class Controlador {
         CargarRegistro_tabla();
     }
 
+
+
+
     public void incializarColumnas(){
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("apellido"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("curso"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("nro_compu"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("nro_Carrito"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("nro_compu"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("nro_Carrito"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("entrega"));
+
 
 
 
@@ -188,7 +196,7 @@ public class Controlador {
         try {
 
             Connection connection = conexion.getConexion();
-            String consult = "SELECT nombre, apellido, curso , nro_Compu, descripcion, nro_Carrito FROM Usuarios";
+            String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
             PreparedStatement consulta = connection.prepareStatement(consult);
             ResultSet muestraResultado = consulta.executeQuery(consult);
 
@@ -197,13 +205,13 @@ public class Controlador {
             while(muestraResultado.next()){
                 id++;
                 String nombre = muestraResultado.getString("nombre");
-                String apellido = muestraResultado.getString("apellido");
                 String curso = muestraResultado.getString("curso");
                 int nro_compu = muestraResultado.getInt("nro_Compu");
                 String descripcion = muestraResultado.getString("descripcion");
                 long nro_Carrito = muestraResultado.getLong("nro_Carrito");
+                String entrega = muestraResultado.getString("entrega");
 
-                datos.add(new Usuarios(id,nombre, apellido, curso, nro_compu, descripcion, nro_Carrito));
+                datos.add(new Usuarios(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
 
 
             }
@@ -211,30 +219,30 @@ public class Controlador {
             tabla.setItems(datos);
 
 
-
-
         }catch (SQLException e){
             e.printStackTrace();
-            System.out.println("Error al cargar datos");
+            System.out.println("Error al mostrar datos");
         }
-
-
 
     }
 
 
     @FXML
-    public void GenerarNuevaColumna(){
+    private Label fechaHora;
 
+    @FXML
+    private void GeneradorFechaHora(){
 
-        TableColumn<Usuarios, String> nuevaCol = new TableColumn<>("Nueva Columna");
-        col2.getColumns().add(nuevaCol);
+        LocalDateTime newFH = LocalDateTime.now();
+
+        DateTimeFormatter formateoHF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String FH = newFH.format(formateoHF);
+
+        fechaHora.setText(FH);
 
 
 
     }
-
-
 
 
 

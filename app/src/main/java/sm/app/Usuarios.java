@@ -4,21 +4,22 @@ public class Usuarios {
 
     private int id;
     private String nombre;
-    private String apellido;
     private String curso;
     private int nro_compu;
     private String descripcion;
     private long nro_Carrito;
+    private String entrega;
 
-    public Usuarios(int id, String nombre, String apellido , String curso, int nro_compu, String descripcion, long nro_Carrito) {
+    public Usuarios(int id, String nombre, String curso, int nro_compu, String descripcion, long nro_Carrito, String entrega) {
         this.id = id;
         this.nombre = nombre;
-        this.apellido = apellido;
         this.curso = curso;
         this.nro_compu = nro_compu;
         this.descripcion = descripcion;
         this.nro_Carrito = nro_Carrito;
+        this.entrega = entrega;
     }
+
     public int getId() {
         return id;
     }
@@ -33,14 +34,6 @@ public class Usuarios {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getCurso() {
@@ -64,23 +57,22 @@ public class Usuarios {
     }
 
     public void setDescripcion(String descripcion) {
-
-            this.descripcion = descripcion;
-
+        this.descripcion = descripcion;
     }
 
     public long getNro_Carrito() {
         return nro_Carrito;
     }
+
     public void setNro_Carrito(long nro_Carrito) {
         this.nro_Carrito = nro_Carrito;
-
     }
 
-
-
+    public String getEntrega() {
+        return entrega;
     }
 
-
-
-
+    public void setEntrega(String entrega) {
+        this.entrega = entrega;
+    }
+}
