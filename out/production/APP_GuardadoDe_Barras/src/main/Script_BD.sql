@@ -5,13 +5,15 @@ create table Usuarios(
 	
     id int auto_increment not null primary key,
 	nombre varchar(30) not null,
-    apellido varchar(30) not null,
 	curso varchar(5) not null,
     nro_Compu int not null,
     descripcion varchar(255),
-    nro_Carrito long not null
-    
+    nro_Carrito bigint not null,
+    entrega datetime
+   
 );
+
+
 
 
 -- ESTO ELIMINA LA TABLA!!!!!
