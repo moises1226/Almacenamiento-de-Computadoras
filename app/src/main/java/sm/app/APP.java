@@ -18,5 +18,9 @@ public class APP extends Application {
         stage.show();
     }
 
+    public static void main(String[] args) {
+        Application.launch();
+    }
+
 
 }

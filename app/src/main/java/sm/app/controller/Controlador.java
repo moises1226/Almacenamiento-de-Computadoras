@@ -1,4 +1,4 @@
-package sm.app;
+package sm.app.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import sm.app.db.ConectorBaseDatos;
+import sm.app.model.Usuarios;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,6 +129,8 @@ public class Controlador {
 
     }
 
+    MetodosBotones metodosBotones;
+
     @FXML
     private Label TextoEnviado;
 
@@ -137,9 +141,7 @@ public class Controlador {
     }
 
     private void limpiarDatos(){
-
         nro_compu.getValueFactory().setValue(0);
-
 
     }
 
@@ -180,11 +182,6 @@ public class Controlador {
         col5.setCellValueFactory(new PropertyValueFactory<>("nro_Carrito"));
         col6.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         col7.setCellValueFactory(new PropertyValueFactory<>("entrega"));
-
-
-
-
-
 
     }
 

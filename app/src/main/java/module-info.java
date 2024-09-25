@@ -12,4 +12,10 @@ module sm.app {
 
     opens sm.app to javafx.fxml;
     exports sm.app;
+    exports sm.app.model;
+    opens sm.app.model to javafx.fxml;
+    exports sm.app.db;
+    opens sm.app.db to javafx.fxml;
+    exports sm.app.controller;
+    opens sm.app.controller to javafx.fxml;
 }

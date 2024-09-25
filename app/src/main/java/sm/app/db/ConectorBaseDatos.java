@@ -1,12 +1,11 @@
-package sm.app;
+package sm.app.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 
-public class ConectorBaseDatos {
+
+public final class ConectorBaseDatos {
 
     private static final String url = "jdbc:mysql://localhost:3306/GuardadoDeBarras";
     private static final String usuario = "root";

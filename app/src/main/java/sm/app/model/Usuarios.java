@@ -1,4 +1,4 @@
-package sm.app;
+package sm.app.model;
 
 public class Usuarios {
 
