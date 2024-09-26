@@ -164,8 +164,7 @@ public class Controlador {
     private TableColumn<Usuarios, String> col6;
     @FXML
     private TableColumn<Usuarios, String> col7;
-    @FXML
-    private TableColumn<Usuarios, String> col8;
+
 
 
 
