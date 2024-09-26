@@ -134,14 +134,19 @@ public class Controlador {
     @FXML
     private Label TextoEnviado;
 
+
+    @FXML
     private void mostrarMensajeExito() {
         TextoEnviado.setVisible(true);
         Timeline tempoAparecerDesaparecer = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> TextoEnviado.setVisible(false)));
         tempoAparecerDesaparecer.play();
     }
 
+
     private void limpiarDatos(){
+
         nro_compu.getValueFactory().setValue(0);
+
 
     }
 

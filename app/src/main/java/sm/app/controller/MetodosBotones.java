@@ -10,13 +10,13 @@ import javafx.util.Duration;
 public class MetodosBotones {
 
 
-
+    @FXML
     private void mostrarMensajeExito(TextField TextoEnviado ) {
         TextoEnviado.setVisible(true);
         Timeline tempoAparecerDesaparecer = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> TextoEnviado.setVisible(false)));
         tempoAparecerDesaparecer.play();
     }
-
+    @FXML
     private void limpiarDatos(Spinner<Integer> nro_compu){
         nro_compu.getValueFactory().setValue(0);
     }
