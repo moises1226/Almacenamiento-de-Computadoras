@@ -9,7 +9,7 @@ public final class ConectorBaseDatos {
 
     private static final String url = "jdbc:mysql://localhost:3306/GuardadoDeBarras";
     private static final String usuario = "root";
-    private static final String password = "123456";
+    private static final String password = "";
 
 
     public Connection getConexion(){
