@@ -125,7 +125,7 @@
                   <Font size="39.0" />
                </font>
             </Label>
-            <Pane fx:id="panelError" layoutX="464.0" layoutY="182.0" prefHeight="132.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
+            <Pane fx:id="panelError" layoutX="494.0" layoutY="291.0" prefHeight="132.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
                <children>
                   <Label layoutX="144.0" layoutY="8.0" text="¡ERROR!" textFill="RED">
                      <font>
@@ -159,8 +159,8 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <TextArea fx:id="contenedorBarras" layoutX="325.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
-            <Text fill="WHITE" layoutX="353.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo de Barras" wrappingWidth="163.0">
+            <TextArea fx:id="contenedorBarras" layoutX="507.0" layoutY="155.0" prefHeight="115.0" prefWidth="355.0" />
+            <Text fill="WHITE" layoutX="598.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo de Barras" wrappingWidth="163.0">
                <font>
                   <Font size="19.0" />
                </font>
