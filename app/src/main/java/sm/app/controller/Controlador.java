@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import sm.app.controller.conectorBarras.ConectorLectorBarras;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Usuarios;
 
@@ -168,12 +169,32 @@ public class Controlador {
 
 
 
-
     public void initialize() {
         Spinner();
         incializarColumnas();
         CargarRegistro_tabla();
+        LectorDeCodigo();
+
+
     }
+
+    @FXML
+    private TextArea contenedorBarras ;
+
+    public void LectorDeCodigo(){
+        ConectorLectorBarras lectorBarras = new ConectorLectorBarras(codigoBarras -> {
+            // Actualiza la UI en el hilo de JavaFX
+            javafx.application.Platform.runLater(() -> {
+                contenedorBarras.setText("Código escaneado: " + codigoBarras);
+            });
+
+        });
+
+        Thread thread = new Thread(lectorBarras);
+        thread.setDaemon(true);  // Marca el hilo como "daemon" para que no bloquee el cierre de la app
+        thread.start();
+    }
+
 
 
 

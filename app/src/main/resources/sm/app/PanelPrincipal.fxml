@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1082.0" stylesheets="@Panel.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.app.controller.Controlador">
+<Pane id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1082.0" stylesheets="@Panel.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.app.controller.Controlador">
    <children>
       <AnchorPane fx:id="panelBordeIzq" layoutX="1.0" onDragDetected="#Mostrar_tabla" prefHeight="687.0" prefWidth="179.0">
          <children>
@@ -159,6 +159,12 @@
                   <Font size="21.0" />
                </font>
             </Label>
+            <TextArea fx:id="contenedorBarras" layoutX="325.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
+            <Text fill="WHITE" layoutX="353.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo de Barras" wrappingWidth="163.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
