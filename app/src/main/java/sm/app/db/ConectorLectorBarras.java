@@ -6,7 +6,7 @@ public class ConectorLectorBarras {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Por favor, escanea el código de barras:");
+        System.out.println("Porfavor, escanea el código de barras:");
         String codigoBarras = scanner.nextLine(); // Captura la entrada del lector
 
         // Muestra el código escaneado
