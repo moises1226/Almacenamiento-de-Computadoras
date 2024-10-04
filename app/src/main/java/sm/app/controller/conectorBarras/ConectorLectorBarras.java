@@ -1,4 +1,4 @@
-package sm.app.db;
+package sm.app.controller.conectorBarras;
 
 import java.util.Scanner;
 
