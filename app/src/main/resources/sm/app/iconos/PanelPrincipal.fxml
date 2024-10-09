@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1182.0" stylesheets="" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.app.controller.Controlador">
+<Pane id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1182.0" stylesheets="" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.p.demobarras.controller.Controlador">
    <children>
       <AnchorPane fx:id="panelBordeIzq" layoutX="1.0" onDragDetected="#Mostrar_tabla" prefHeight="687.0" prefWidth="179.0" />
       <AnchorPane fx:id="PanelCabeza" layoutX="-14.0" prefHeight="115.0" prefWidth="866.0" style="-fx-background-color: beige;" stylesheets="@Panel.css">

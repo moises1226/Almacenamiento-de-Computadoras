@@ -12,7 +12,7 @@ public class APP extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(APP.class.getResource("PanelPrincipal.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1075, 687);
+        Scene scene = new Scene(fxmlLoader.load(), 1182, 680);
         stage.setTitle("Guardado de Computadoras");
         stage.setScene(scene);
         stage.setResizable(false);

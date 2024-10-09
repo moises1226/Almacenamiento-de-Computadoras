@@ -10,9 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import sm.app.controller.conectorBarras.ConectorLectorBarras;
 import sm.app.db.ConectorBaseDatos;
-import sm.app.model.Usuarios;
+import sm.app.model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +19,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Controlador {
 
     @FXML
-    private TableView<Usuarios> tabla;
+    private TableView<Usuario> tabla;
 
     @FXML
     public void Mostrar_tabla(){
@@ -51,152 +54,162 @@ public class Controlador {
 
 
     @FXML
-    private Spinner<Integer> nro_carrito;
-    @FXML
-    private Spinner<Integer> nro_compu;
-    @FXML
     private TextField curso;
-
     @FXML
-    public void Spinner() {
-
-        SpinnerValueFactory<Integer> valores1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100000, 0);
-        SpinnerValueFactory<Integer> valores2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100000, 0);
-        nro_carrito.setValueFactory(valores1);
-        nro_compu.setValueFactory(valores2);
-
-    }
-
+    private TextField Dni;
     @FXML
     private TextField nombre_Respo;
     @FXML
-    private TextArea campo_Descripcion;
-
+    private TextArea CampoDescripcion;
     @FXML
     private Pane panelError;
+    @FXML
+    private TextField
+     codigoBarras;
 
     @FXML
-    private void btn_Enviar(){
+    private void btn_Registrar(){
 
-        String nombre = nombre_Respo.getText();
-        String curso = this.curso.getText();
-        long nro_Carrito = this.nro_carrito.getValue();
-        int nro_compu = this.nro_compu.getValue();
-        String descripcion = campo_Descripcion.getText();
-        String entrega = fechaHora.getText();
+        String dni = Dni.getText();
+        String n = nombre_Respo.getText();
+        String c = curso.getText();
+        String CB = codigoBarras.getText();
+        
 
-       if(nombre.isEmpty()  || curso.isEmpty() || nro_compu == 0 || nro_Carrito == 0 || entrega.isEmpty()){
+       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() || CB.isEmpty()){
 
            panelError.setVisible(true);
 
        }else{
 
-           GuardadoDeDatos(nombre, curso, nro_compu, nro_Carrito, descripcion, entrega);
+           int d = Integer.parseInt(dni); 
+
+           AgregarUsuario(n, d, c , CB);
 
            panelError.setVisible(false);
 
         }
     }
 
-    public void GuardadoDeDatos(String nombre, String curso, int nro_compu, long nro_Carrito, String descripcion, String entrega) {
+
+
+    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo , String codigoBarras){
+
 
         ConectorBaseDatos conexion = new ConectorBaseDatos();
 
-
+        
         try {
+            
+
             Connection connection = conexion.getConexion();
-            String insertDatos = "INSERT INTO Usuarios(nombre,curso , nro_Compu, descripcion, nro_Carrito, entrega) VALUES(? ,?, ?, ?, ?, ?)";
-            PreparedStatement ins_dt = connection.prepareStatement(insertDatos);
-            ins_dt.setString(1, nombre);
-            ins_dt.setString(2, curso);
-            ins_dt.setInt(3, nro_compu);
-            ins_dt.setString(4, descripcion);
-            ins_dt.setLong(5, nro_Carrito);
-            ins_dt.setString(6, entrega);
+            
+            String query = "INSERT INTO usuario (Nombre ,  DNI , Curso ) VALUES ( ? , ? , ? ) "; 
+            PreparedStatement pQuery = connection.prepareStatement(query);
 
-            ins_dt.executeUpdate();
+            pQuery.setString(1 , nRespo);
+            pQuery.setInt(2,  dniRespo);
+            pQuery.setString(3, cursoRespo);
+
+
+            pQuery.executeUpdate();
             mostrarMensajeExito();
-            limpiarDatos();
-            CargarRegistro_tabla();
 
 
-
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.out.println("Error al guardar datos");
+        } catch (Exception e) {
+            // TODO: handle exception
         }
+
 
     }
 
-    MetodosBotones metodosBotones;
+
+
+   private String VerificacionCodigoBarras(String codigoB) {
+    ConectorBaseDatos conexion = new ConectorBaseDatos();
+    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
+    String dato = "";
+
+    if (codigoB.length() == 16) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = conexion.getConexion();
+            String query = "SELECT CodigoBarras from computadora";
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String codBarras = resultSet.getString("CodigoBarras");
+                codigosBarras.add(codBarras);
+            }
+
+            // Verificación
+            if (codigosBarras.contains(codigoB)) {
+                dato += codigoB; // O podrías simplemente retornar true si lo deseas
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
+        } finally {
+            // Asegúrate de cerrar los recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    } else {
+        System.out.println("El codigo excede el tamaño requerido ");
+    }
+
+    return dato; // O podrías retornar un valor booleano
+}
+
+
 
     @FXML
-    private Label TextoEnviado;
+    private Label TextoRegistrado;
 
 
     @FXML
     private void mostrarMensajeExito() {
-        TextoEnviado.setVisible(true);
-        Timeline tempoAparecerDesaparecer = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> TextoEnviado.setVisible(false)));
+        TextoRegistrado.setVisible(true);
+        Timeline tempoAparecerDesaparecer = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> TextoRegistrado.setVisible(false)));
         tempoAparecerDesaparecer.play();
     }
 
 
-    private void limpiarDatos(){
-
-        nro_compu.getValueFactory().setValue(0);
-
-
-    }
-
     @FXML
-    private TableColumn<Usuarios, Integer> col1;
+    private TableColumn<Usuario, Integer> col1;
     @FXML
-    private TableColumn<Usuarios, String> col2;
+    private TableColumn<Usuario, String> col2;
     @FXML
-    private TableColumn<Usuarios, String> col3;
+    private TableColumn<Usuario, String> col3;
     @FXML
-    private TableColumn<Usuarios, String> col4;
+    private TableColumn<Usuario, String> col4;
     @FXML
-    private TableColumn<Usuarios, Long> col5;
+    private TableColumn<Usuario, Long> col5;
     @FXML
-    private TableColumn<Usuarios, String> col6;
+    private TableColumn<Usuario, String> col6;
     @FXML
-    private TableColumn<Usuarios, String> col7;
+    private TableColumn<Usuario, String> col7;
 
 
 
 
     public void initialize() {
-        Spinner();
         incializarColumnas();
         CargarRegistro_tabla();
-//        LectorDeCodigo();
+
 
 
     }
-
-//    @FXML
-//    private TextArea contenedorBarras ;
-//
-//    public void LectorDeCodigo(){
-//        ConectorLectorBarras lectorBarras = new ConectorLectorBarras(codigoBarras -> {
-//            // Actualiza la UI en el hilo de JavaFX
-//            javafx.application.Platform.runLater(() -> {
-//                contenedorBarras.setText("Código escaneado: " + codigoBarras);
-//            });
-//
-//        });
-//
-//        Thread thread = new Thread(lectorBarras);
-//        thread.setDaemon(true);  // Marca el hilo como "daemon" para que no bloquee el cierre de la app
-//        thread.start();
-//    }
-
-
-
 
 
     public void incializarColumnas(){
@@ -222,7 +235,7 @@ public class Controlador {
             PreparedStatement consulta = connection.prepareStatement(consult);
             ResultSet muestraResultado = consulta.executeQuery(consult);
 
-            ObservableList<Usuarios> datos = FXCollections.observableArrayList();
+            ObservableList<Usuario> datos = FXCollections.observableArrayList();
 
             while(muestraResultado.next()){
                 id++;
@@ -233,7 +246,7 @@ public class Controlador {
                 long nro_Carrito = muestraResultado.getLong("nro_Carrito");
                 String entrega = muestraResultado.getString("entrega");
 
-                datos.add(new Usuarios(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
+                datos.add(new Usuario(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
 
 
             }
@@ -268,6 +281,9 @@ public class Controlador {
 
 
 
+
+
+    
 
 
 
