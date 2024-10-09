@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Usuario;
@@ -66,34 +67,42 @@ public class Controlador {
     @FXML
     private TextField
      codigoBarras;
-
     @FXML
-    private void btn_Registrar(){
+    private Pane barrasError; 
 
-        String dni = Dni.getText();
-        String n = nombre_Respo.getText();
-        String c = curso.getText();
-        String CB = codigoBarras.getText();
-        
-
-       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() || CB.isEmpty()){
-
-           panelError.setVisible(true);
-
-       }else{
-
-           int d = Integer.parseInt(dni); 
-
-           AgregarUsuario(n, d, c , CB);
-
-           panelError.setVisible(false);
-
+     @FXML
+     private void btn_Registrar() {
+         String dni = Dni.getText();
+         String n = nombre_Respo.getText();
+         String c = curso.getText();
+         String CB = codigoBarras.getText();
+         
+         // Verificar si los campos están vacíos
+         if (n.isEmpty() || c.isEmpty() || dni.isEmpty() || CB.isEmpty()) {
+             panelError.setVisible(true);
+             return; // Salir del método si hay campos vacíos
+         }
+     
+         // Verificar el código de barras
+         // Verificar el código de barras
+        String verificacion = VerificacionCodigoBarras(CB);
+        if (verificacion.isEmpty() || dni.length() > 8) {
+        barrasError.setVisible(true);
+        return; // Salir del método
         }
-    }
+
+        // Si el código de barras es válido, mostrar los resultados
+        ResultadoPanel(verificacion, dni);
+
+         // Convertir DNI a entero y agregar usuario si todo es válido
+         AgregarUsuario(n, dni, c, verificacion); // Usar el código de barras verificado
+         panelError.setVisible(false);
+     }
+     
 
 
 
-    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo , String codigoBarras){
+    private void AgregarUsuario(String nRespo , String dniRespo , String cursoRespo , String codigoBarras){
 
 
         ConectorBaseDatos conexion = new ConectorBaseDatos();
@@ -108,7 +117,7 @@ public class Controlador {
             PreparedStatement pQuery = connection.prepareStatement(query);
 
             pQuery.setString(1 , nRespo);
-            pQuery.setInt(2,  dniRespo);
+            pQuery.setString(2,  dniRespo);
             pQuery.setString(3, cursoRespo);
 
 
@@ -125,9 +134,10 @@ public class Controlador {
 
 
 
-   private String VerificacionCodigoBarras(String codigoB) {
+  
+private String VerificacionCodigoBarras(String codigoB) {
     ConectorBaseDatos conexion = new ConectorBaseDatos();
-    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
+    Set<String> codigosBarras = new HashSet<>();
     String dato = "";
 
     if (codigoB.length() == 16) {
@@ -137,7 +147,7 @@ public class Controlador {
 
         try {
             connection = conexion.getConexion();
-            String query = "SELECT CodigoBarras from computadora";
+            String query = "SELECT CodigoBarras FROM computadora";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
@@ -148,12 +158,12 @@ public class Controlador {
 
             // Verificación
             if (codigosBarras.contains(codigoB)) {
-                dato += codigoB; // O podrías simplemente retornar true si lo deseas
+                dato = codigoB; // Retornar el código de barras si es válido
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
+            System.out.println("Error al verificar el código de barras: " + e.getMessage());
         } finally {
             // Asegúrate de cerrar los recursos
             try {
@@ -165,12 +175,11 @@ public class Controlador {
             }
         }
     } else {
-        System.out.println("El codigo excede el tamaño requerido ");
+        System.out.println("El código excede el tamaño requerido.");
     }
 
-    return dato; // O podrías retornar un valor booleano
+    return dato; // Retorna el código de barras si es válido o una cadena vacía si no lo es
 }
-
 
 
     @FXML
@@ -282,11 +291,74 @@ public class Controlador {
 
 
 
+    @FXML
+    private Text textResponsable;
 
+    @FXML
+    private Text textCurso;
+    @FXML
+    private Text textCarrito;
+    @FXML
+    private Text textComputadora;
+
+
+
+
+    private void ResultadoPanel(String codigoB, String dni) {
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
     
-
-
-
+        try {
+            connection = conexion.getConexion();
+            // Consulta para obtener los datos del usuario y el carrito
+            String query = "SELECT u.Nombre, u.DNI, u.Curso, c.NroCompu, ca.NroCarrito " +
+                           "FROM usuario u " +
+                           "JOIN carrito ca ON ca.IdCompu = (SELECT IdCompu FROM computadora WHERE CodigoBarras = ?) " +
+                           "WHERE u.DNI = ?";
+    
+            statement = connection.prepareStatement(query);
+            statement.setString(1, codigoB);
+            statement.setString(2, dni); // Usamos el DNI directamente del TextField
+    
+            resultSet = statement.executeQuery();
+    
+            if (resultSet.next()) {
+                // Obtener los datos y mostrarlos en la interfaz
+                String nombre = resultSet.getString("Nombre");
+                String curso = resultSet.getString("Curso");
+                int numeroComputadora = resultSet.getInt("NroCompu");
+                int numeroCarrito = resultSet.getInt("NroCarrito");
+                
+                //conversion
+                String nCompu = Integer.toString(numeroComputadora);
+                String nCarrito = Integer.toString(numeroCarrito);
+                // Aquí debes tener etiquetas o campos en tu interfaz para mostrar estos datos
+                textResponsable.setText(nombre);
+                textCurso.setText(curso);
+                textCarrito.setText(nCarrito);
+                textComputadora.setText(nCompu);
+            } else {
+                // Manejo del caso cuando no se encuentra el usuario
+                System.out.println("error");
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al obtener resultados: " + e.getMessage());
+        } finally {
+            // Asegúrate de cerrar los recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 
 
 
