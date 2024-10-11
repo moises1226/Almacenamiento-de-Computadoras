@@ -67,107 +67,109 @@ public class Controlador {
     private TextField
      codigoBarras;
 
- //   @FXML
-//    private void btn_Registrar(){
-//
-//        String dni = Dni.getText();
-//        String n = nombre_Respo.getText();
-//        String c = curso.getText();
-//        String CB = codigoBarras.getText();
-//
-//
-//       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() || CB.isEmpty()){
-//
-//           panelError.setVisible(true);
-//
-//       }else{
-//
-//           int d = Integer.parseInt(dni);
-//
-//           AgregarUsuario(n, d, c , CB);
-//
-//           panelError.setVisible(false);
-//
-//        }
-//    }
+    @FXML
+    private void btn_Registrar(){
 
-//
-//    private void AgregarUsuario(String nRespo, int dniRespo, String cursoRespo, String codigoBarras) {
-//
-//
-//        ConectorBaseDatos conexion = new ConectorBaseDatos();
-//
-//
-//        try {
-//
-//
-//            Connection connection = conexion.getConexion();
-//
-//            String query = "INSERT INTO usuario (Nombre ,  DNI , Curso ) VALUES ( ? , ? , ? ) ";
-//            PreparedStatement pQuery = connection.prepareStatement(query);
-//
-//            pQuery.setString(1, nRespo);
-//            pQuery.setInt(2, dniRespo);
-//            pQuery.setString(3, cursoRespo);
-//
-//
-//            pQuery.executeUpdate();
-//            mostrarMensajeExito();
-//
-//
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//
-//
-//    }
+        String dni = Dni.getText();
+        String n = nombre_Respo.getText();
+        String c = curso.getText();
+        String CB = codigoBarras.getText();
+        
 
-//
-//    private String VerificacionCodigoBarras(String codigoB) {
-//        ConectorBaseDatos conexion = new ConectorBaseDatos();
-//        Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
-//        String dato = "";
-//
-//        if (codigoB.length() == 16) {
-//            Connection connection = null;
-//            PreparedStatement statement = null;
-//            ResultSet resultSet = null;
-//
-//            try {
-//                connection = conexion.getConexion();
-//                String query = "SELECT CodigoBarras from computadora";
-//                statement = connection.prepareStatement(query);
-//                resultSet = statement.executeQuery();
-//
-//                while (resultSet.next()) {
-//                    String codBarras = resultSet.getString("CodigoBarras");
-//                    codigosBarras.add(codBarras);
-//                }
-//
-//                // Verificación
-//                if (codigosBarras.contains(codigoB)) {
-//                    dato += codigoB; // O podrías simplemente retornar true si lo deseas
-//                }
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
-//            } finally {
-//                // Asegúrate de cerrar los recursos
-//                try {
-//                    if (resultSet != null) resultSet.close();
-//                    if (statement != null) statement.close();
-//                    if (connection != null) connection.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } else {
-//            System.out.println("El codigo excede el tamaño requerido ");
-//        }
-//
-//        return dato; // O podrías retornar un valor booleano
-//    }
+       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() || CB.isEmpty()){
+
+           panelError.setVisible(true);
+
+       }else{
+
+           int d = Integer.parseInt(dni); 
+
+           AgregarUsuario(n, d, c , CB);
+
+           panelError.setVisible(false);
+
+        }
+    }
+
+
+
+    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo , String codigoBarras){
+
+
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+
+        
+        try {
+            
+
+            Connection connection = conexion.getConexion();
+            
+            String query = "INSERT INTO usuario (Nombre ,  DNI , Curso ) VALUES ( ? , ? , ? ) "; 
+            PreparedStatement pQuery = connection.prepareStatement(query);
+
+            pQuery.setString(1 , nRespo);
+            pQuery.setInt(2,  dniRespo);
+            pQuery.setString(3, cursoRespo);
+
+
+            pQuery.executeUpdate();
+            mostrarMensajeExito();
+
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+
+    }
+
+
+
+   private String VerificacionCodigoBarras(String codigoB) {
+    ConectorBaseDatos conexion = new ConectorBaseDatos();
+    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
+    String dato = "";
+
+    if (codigoB.length() == 16) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = conexion.getConexion();
+            String query = "SELECT CodigoBarras from computadora";
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String codBarras = resultSet.getString("CodigoBarras");
+                codigosBarras.add(codBarras);
+            }
+
+            // Verificación
+            if (codigosBarras.contains(codigoB)) {
+                dato += codigoB; // O podrías simplemente retornar true si lo deseas
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
+        } finally {
+            // Asegúrate de cerrar los recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    } else {
+        System.out.println("El codigo excede el tamaño requerido ");
+    }
+
+    return dato; // O podrías retornar un valor booleano
+}
 
 
 
@@ -199,12 +201,15 @@ public class Controlador {
     private TableColumn<Usuario, String> col7;
 
 
-//    public void initialize() {
-//        incializarColumnas();
-//        CargarRegistro_tabla();
-//
-//
-//    }
+
+
+    public void initialize() {
+        incializarColumnas();
+        CargarRegistro_tabla();
+
+
+
+    }
 
 
     public void incializarColumnas(){
@@ -217,45 +222,45 @@ public class Controlador {
         col7.setCellValueFactory(new PropertyValueFactory<>("entrega"));
 
     }
-//
-//    private void CargarRegistro_tabla() {
-//
-//        ConectorBaseDatos conexion = new ConectorBaseDatos();
-//        int id = 0;
-//
-//        try {
-//
-//            Connection connection = conexion.getConexion();
-//            String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
-//            PreparedStatement consulta = connection.prepareStatement(consult);
-//            ResultSet muestraResultado = consulta.executeQuery(consult);
-//
-//            ObservableList<Usuario> datos = FXCollections.observableArrayList();
-//
-//            while (muestraResultado.next()) {
-//                id++;
-//                String nombre = muestraResultado.getString("nombre");
-//                String curso = muestraResultado.getString("curso");
-//                int nro_compu = muestraResultado.getInt("nro_Compu");
-//                String descripcion = muestraResultado.getString("descripcion");
-//                long nro_Carrito = muestraResultado.getLong("nro_Carrito");
-//                String entrega = muestraResultado.getString("entrega");
-//
-//// datos.add(new Usuario(id, nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
-//
-//
-//            }
-//
-//            tabla.setItems(datos);
-//
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            System.out.println("Error al mostrar datos");
-//        }
-//
-//    }
-//
+
+    private void CargarRegistro_tabla(){
+
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+        int id = 0;
+
+        try {
+
+            Connection connection = conexion.getConexion();
+            String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
+            PreparedStatement consulta = connection.prepareStatement(consult);
+            ResultSet muestraResultado = consulta.executeQuery(consult);
+
+            ObservableList<Usuario> datos = FXCollections.observableArrayList();
+
+            while(muestraResultado.next()){
+                id++;
+                String nombre = muestraResultado.getString("nombre");
+                String curso = muestraResultado.getString("curso");
+                int nro_compu = muestraResultado.getInt("nro_Compu");
+                String descripcion = muestraResultado.getString("descripcion");
+                long nro_Carrito = muestraResultado.getLong("nro_Carrito");
+                String entrega = muestraResultado.getString("entrega");
+
+                datos.add(new Usuario(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
+
+
+            }
+
+            tabla.setItems(datos);
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Error al mostrar datos");
+        }
+
+    }
+
 
     @FXML
     private Label fechaHora;
