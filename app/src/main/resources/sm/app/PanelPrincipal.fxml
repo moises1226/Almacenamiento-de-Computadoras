@@ -225,7 +225,7 @@
             </ImageView>
             <ImageView fitHeight="20.0" fitWidth="24.0" layoutX="7.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/usuario%20(1).png" />
+                  <Image url="@iconos/usuario(1).png" />
                </image>
             </ImageView>
             <ImageView fitHeight="22.0" fitWidth="24.0" layoutX="8.0" layoutY="298.0" pickOnBounds="true" preserveRatio="true">
