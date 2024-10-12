@@ -161,9 +161,9 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Pane fx:id="CodigoBarrasError" layoutX="440.0" layoutY="350.0" prefHeight="161.0" prefWidth="365.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
+            <Pane fx:id="CodigoBarrasError" layoutX="432.0" layoutY="350.0" prefHeight="161.0" prefWidth="380.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
                <children>
-                  <Text fill="#ff0909" layoutX="80.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Error en busqueda!" wrappingWidth="219.0">
+                  <Text fill="#ff0909" layoutX="87.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Error en busqueda!" wrappingWidth="219.0">
                      <font>
                         <Font size="24.0" />
                      </font>
