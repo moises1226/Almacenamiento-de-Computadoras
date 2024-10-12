@@ -19,7 +19,7 @@ CREATE TABLE computadora (
 CREATE TABLE carrito (
     IdCarrito INT AUTO_INCREMENT NOT NULL,
     NroCarrito INT NOT NULL,
-    IdCompu INT UNIQUE NOT NULL,
+    IdCompu INT NOT NULL,
     PRIMARY KEY (IdCarrito),
     FOREIGN KEY (IdCompu) REFERENCES computadora(IdCompu)
 );

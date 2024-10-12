@@ -17,15 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Controlador {
 
@@ -68,7 +61,8 @@ public class Controlador {
     private TextField codigoBarras;
     @FXML
     private Pane panelError;
-
+    @FXML
+    private Pane CodigoBarrasError;
 
 
     @FXML
@@ -93,10 +87,11 @@ public class Controlador {
                 int d = Integer.parseInt(dni); 
                 AgregarUsuario(n, d, c );
                 panelError.setVisible(false);
+                CodigoBarrasError.setVisible(false);
 
             }else{
 
-                
+                CodigoBarrasError.setVisible(true);
 
             }
            
