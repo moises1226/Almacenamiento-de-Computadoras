@@ -69,7 +69,7 @@ public class Controlador {
 
 
     @FXML
-    private void btnRegistrar(){
+    public void btnRegistrar(){
 
         String dni = Dni.getText();
         String n = nombre_Respo.getText();
