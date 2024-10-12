@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Usuario;
@@ -63,6 +64,10 @@ public class Controlador {
     private Pane panelError;
     @FXML
     private Pane CodigoBarrasError;
+    @FXML
+    private Text infoError;
+    @FXML
+    private Label tituloError;
 
 
     @FXML
@@ -76,22 +81,42 @@ public class Controlador {
 
        if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() ||CB.isEmpty() ){
 
+           tituloError.setText("!ERROR!");
+           infoError.setText("Los datos no fueron reguistrados correctamente por falta de datos en campos vacios.");
            panelError.setVisible(true);
 
        }else{
 
-            boolean verificacion = VerificacionCodigoBarras(CB);
+            
+            if(CB.length() != 16){
 
-            if(verificacion == true){
-
-                int d = Integer.parseInt(dni); 
-                AgregarUsuario(n, d, c );
-                panelError.setVisible(false);
-                CodigoBarrasError.setVisible(false);
+            tituloError.setText("¡ERROR DE CARACTERES!");
+            infoError.setText("La cantidad de caracteres que ingreso como codigo de barras no es igual a 16");
+            panelError.setVisible(true);
 
             }else{
 
-                CodigoBarrasError.setVisible(true);
+                boolean verificacion = VerificacionCodigoBarras(CB);
+
+
+           
+                if(verificacion == true){
+    
+                    int d = Integer.parseInt(dni); 
+                    AgregarUsuario(n, d, c );
+                    panelError.setVisible(false);
+                    CodigoBarrasError.setVisible(false);
+    
+                }else{
+    
+                    tituloError.setText("!ERROR!");
+                    infoError.setText("El codigo de barras que ingreso no esta registrado");
+                    panelError.setVisible(true);
+         
+    
+                }
+
+
 
             }
            
@@ -147,11 +172,9 @@ public class Controlador {
     PreparedStatement ejecucion = null;
     ResultSet resultado = null;
 
-    if(codigoB.length() != 16){
-
-        
-
-    }else{
+    
+    
+       panelError.setVisible(false);
 
     try {
         connection = conexion.getConexion();
@@ -173,6 +196,11 @@ public class Controlador {
         }
 
     } catch (SQLException e) {
+
+        tituloError.setText("¡ERROR EN BD!");
+        infoError.setText("Error en la conexion o recopilacion de datos de la base de datos ");
+        panelError.setVisible(true);
+
         e.printStackTrace();
     }finally {
         try {
@@ -184,7 +212,6 @@ public class Controlador {
         }
     }
 
-    }
     
 
     return bandera;
@@ -223,13 +250,15 @@ public class Controlador {
 
 
 
-    // public void initialize() {
-    //     incializarColumnas();
-    //     CargarRegistro_tabla();
+    public void initialize() {
+
+        panelError.setVisible(false);
+        // incializarColumnas();
+        // CargarRegistro_tabla();
 
 
 
-    // }
+    }
 
 
     public void incializarColumnas(){
