@@ -85,7 +85,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Pane fx:id="panelError" layoutX="436.0" layoutY="325.0" prefHeight="211.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
+            <Pane fx:id="panelError" layoutX="436.0" layoutY="325.0" prefHeight="211.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
                <children>
                   <Label layoutX="126.0" layoutY="14.0" text="¡ERROR!" textFill="RED">
                      <font>
@@ -161,20 +161,6 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Pane fx:id="CodigoBarrasError" layoutX="432.0" layoutY="350.0" prefHeight="161.0" prefWidth="400.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
-               <children>
-                  <Text fill="#ff0909" layoutX="100.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error en busqueda" wrappingWidth="210.0">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" layoutX="35.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EL codigo de barras que ingreso no esta registrado en la base de datos" wrappingWidth="330.00">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </Pane>
          </children>
       </AnchorPane>
       <Pane id="panelResultado" fx:id="panelResultado" depthTest="ENABLE" layoutX="852.0" layoutY="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="689.0" prefWidth="332.0" stylesheets="@Panel.css">
