@@ -54,7 +54,7 @@ public class Controlador {
 
 
     @FXML
-    private TextField curso;
+    private TextField Curso;
     @FXML
     private TextField Dni;
     @FXML
@@ -62,21 +62,22 @@ public class Controlador {
     @FXML
     private TextArea CampoDescripcion;
     @FXML
-    private Pane panelError;
+    private TextField codigoBarras;
     @FXML
-    private TextField
-     codigoBarras;
+    private Pane panelError;
+
+
 
     @FXML
-    private void btn_Registrar(){
+    private void btnRegistrar(){
 
         String dni = Dni.getText();
         String n = nombre_Respo.getText();
-        String c = curso.getText();
-        String CB = codigoBarras.getText();
+        String c = Curso.getText();
+        // String CB = codigoBarras.getText();
         
 
-       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() || CB.isEmpty()){
+       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() ){
 
            panelError.setVisible(true);
 
@@ -84,8 +85,7 @@ public class Controlador {
 
            int d = Integer.parseInt(dni); 
 
-           AgregarUsuario(n, d, c , CB);
-
+           AgregarUsuario(n, d, c );
            panelError.setVisible(false);
 
         }
@@ -93,7 +93,7 @@ public class Controlador {
 
 
 
-    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo , String codigoBarras){
+    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo ){
 
 
         ConectorBaseDatos conexion = new ConectorBaseDatos();
@@ -110,66 +110,70 @@ public class Controlador {
             pQuery.setString(1 , nRespo);
             pQuery.setInt(2,  dniRespo);
             pQuery.setString(3, cursoRespo);
-
+            
 
             pQuery.executeUpdate();
             mostrarMensajeExito();
 
 
         } catch (Exception e) {
-            // TODO: handle exception
-        }
-
-
-    }
-
-
-
-   private String VerificacionCodigoBarras(String codigoB) {
-    ConectorBaseDatos conexion = new ConectorBaseDatos();
-    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
-    String dato = "";
-
-    if (codigoB.length() == 16) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = conexion.getConexion();
-            String query = "SELECT CodigoBarras from computadora";
-            statement = connection.prepareStatement(query);
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String codBarras = resultSet.getString("CodigoBarras");
-                codigosBarras.add(codBarras);
-            }
-
-            // Verificación
-            if (codigosBarras.contains(codigoB)) {
-                dato += codigoB; // O podrías simplemente retornar true si lo deseas
-            }
-
-        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
-        } finally {
-            // Asegúrate de cerrar los recursos
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-    } else {
-        System.out.println("El codigo excede el tamaño requerido ");
+
+
     }
 
-    return dato; // O podrías retornar un valor booleano
-}
+
+
+
+
+
+
+//    private String VerificacionCodigoBarras(String codigoB) {
+//     ConectorBaseDatos conexion = new ConectorBaseDatos();
+//     Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
+//     String dato = "";
+
+//     if (codigoB.length() == 16) {
+//         Connection connection = null;
+//         PreparedStatement statement = null;
+//         ResultSet resultSet = null;
+
+//         try {
+//             connection = conexion.getConexion();
+//             String query = "SELECT CodigoBarras from computadora";
+//             statement = connection.prepareStatement(query);
+//             resultSet = statement.executeQuery();
+
+//             while (resultSet.next()) {
+//                 String codBarras = resultSet.getString("CodigoBarras");
+//                 codigosBarras.add(codBarras);
+//             }
+
+//             // Verificación
+//             if (codigosBarras.contains(codigoB)) {
+//                 dato += codigoB; // O podrías simplemente retornar true si lo deseas
+//             }
+
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
+//         } finally {
+//             // Asegúrate de cerrar los recursos
+//             try {
+//                 if (resultSet != null) resultSet.close();
+//                 if (statement != null) statement.close();
+//                 if (connection != null) connection.close();
+//             } catch (SQLException e) {
+//                 e.printStackTrace();
+//             }
+//         }
+//     } else {
+//         System.out.println("El codigo excede el tamaño requerido ");
+//     }
+
+//     return dato; // O podrías retornar un valor booleano
+// }
 
 
 
@@ -203,13 +207,13 @@ public class Controlador {
 
 
 
-    public void initialize() {
-        incializarColumnas();
-        CargarRegistro_tabla();
+    // public void initialize() {
+    //     incializarColumnas();
+    //     CargarRegistro_tabla();
 
 
 
-    }
+    // }
 
 
     public void incializarColumnas(){
@@ -223,43 +227,43 @@ public class Controlador {
 
     }
 
-    private void CargarRegistro_tabla(){
+    // private void CargarRegistro_tabla(){
 
-        ConectorBaseDatos conexion = new ConectorBaseDatos();
-        int id = 0;
+    //     ConectorBaseDatos conexion = new ConectorBaseDatos();
+    //     int id = 0;
 
-        try {
+    //     try {
 
-            Connection connection = conexion.getConexion();
-            String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
-            PreparedStatement consulta = connection.prepareStatement(consult);
-            ResultSet muestraResultado = consulta.executeQuery(consult);
+    //         Connection connection = conexion.getConexion();
+    //         String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
+    //         PreparedStatement consulta = connection.prepareStatement(consult);
+    //         ResultSet muestraResultado = consulta.executeQuery(consult);
 
-            ObservableList<Usuario> datos = FXCollections.observableArrayList();
+    //         ObservableList<Usuario> datos = FXCollections.observableArrayList();
 
-            while(muestraResultado.next()){
-                id++;
-                String nombre = muestraResultado.getString("nombre");
-                String curso = muestraResultado.getString("curso");
-                int nro_compu = muestraResultado.getInt("nro_Compu");
-                String descripcion = muestraResultado.getString("descripcion");
-                long nro_Carrito = muestraResultado.getLong("nro_Carrito");
-                String entrega = muestraResultado.getString("entrega");
+    //         while(muestraResultado.next()){
+    //             id++;
+    //             String nombre = muestraResultado.getString("nombre");
+    //             String curso = muestraResultado.getString("curso");
+    //             int nro_compu = muestraResultado.getInt("nro_Compu");
+    //             String descripcion = muestraResultado.getString("descripcion");
+    //             long nro_Carrito = muestraResultado.getLong("nro_Carrito");
+    //             String entrega = muestraResultado.getString("entrega");
 
-                datos.add(new Usuario(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
-
-
-            }
-
-            tabla.setItems(datos);
+    //             datos.add(new Usuario(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
 
 
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.out.println("Error al mostrar datos");
-        }
+    //         }
 
-    }
+    //         tabla.setItems(datos);
+
+
+    //     }catch (SQLException e){
+    //         e.printStackTrace();
+    //         System.out.println("Error al mostrar datos");
+    //     }
+
+    // }
 
 
     @FXML
