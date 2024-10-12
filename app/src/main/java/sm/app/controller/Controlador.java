@@ -147,6 +147,12 @@ public class Controlador {
     PreparedStatement ejecucion = null;
     ResultSet resultado = null;
 
+    if(codigoB.length() != 16){
+
+        
+
+    }else{
+
     try {
         connection = conexion.getConexion();
         
@@ -168,16 +174,18 @@ public class Controlador {
 
     } catch (SQLException e) {
         e.printStackTrace();
-        System.out.println("El código de barras que ingresó no existe: " + e.getMessage());
-    } finally {
+    }finally {
         try {
             if (resultado != null) resultado.close();
-            if (ejecucion != null) resultado.close();
+            if (ejecucion != null) ejecucion.close(); // Cambiado a ejecucion
             if (connection != null) connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    }
+    
 
     return bandera;
 }
