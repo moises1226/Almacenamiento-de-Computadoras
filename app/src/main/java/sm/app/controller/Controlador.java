@@ -17,11 +17,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Controlador {
@@ -69,7 +72,7 @@ public class Controlador {
 
 
     @FXML
-    public void btnRegistrar(){
+    private void btnRegistrar(){
 
         String dni = Dni.getText();
         String n = nombre_Respo.getText();
@@ -129,51 +132,65 @@ public class Controlador {
 
 
 
-//    private String VerificacionCodigoBarras(String codigoB) {
-//     ConectorBaseDatos conexion = new ConectorBaseDatos();
-//     Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
-//     String dato = "";
 
-//     if (codigoB.length() == 16) {
-//         Connection connection = null;
-//         PreparedStatement statement = null;
-//         ResultSet resultSet = null;
+   @FXML
+   private String VerificacionCodigoBarras(String codigoB) {
+    ConectorBaseDatos conexion = new ConectorBaseDatos();
+    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
 
-//         try {
-//             connection = conexion.getConexion();
-//             String query = "SELECT CodigoBarras from computadora";
-//             statement = connection.prepareStatement(query);
-//             resultSet = statement.executeQuery();
+    HashMap<Integer , String > numeroAndcodigo = new HashMap<>();
+    
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-//             while (resultSet.next()) {
-//                 String codBarras = resultSet.getString("CodigoBarras");
-//                 codigosBarras.add(codBarras);
-//             }
+        try {
+            connection = conexion.getConexion();
+            
 
-//             // Verificación
-//             if (codigosBarras.contains(codigoB)) {
-//                 dato += codigoB; // O podrías simplemente retornar true si lo deseas
-//             }
+            String query = "SELECT computadora.NroCompu, computadora.CodigoBarras, carrito.NroCarrito " + 
+            "FROM carrito " + 
+            "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
 
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
-//         } finally {
-//             // Asegúrate de cerrar los recursos
-//             try {
-//                 if (resultSet != null) resultSet.close();
-//                 if (statement != null) statement.close();
-//                 if (connection != null) connection.close();
-//             } catch (SQLException e) {
-//                 e.printStackTrace();
-//             }
-//         }
-//     } else {
-//         System.out.println("El codigo excede el tamaño requerido ");
-//     }
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
 
-//     return dato; // O podrías retornar un valor booleano
-// }
+            while (resultSet.next()) {
+                int nroCompu = resultSet.getInt("NroCompu");
+                String codigBarras = resultSet.getString("CodigoBarras");
+                int nroCarrito = resultSet.getInt("NroCarrito");
+                
+                numeroAndcodigo.put(nroCompu, codigBarras);
+            }
+
+            // Verificación
+            
+            for(int n : numeroAndcodigo.keySet()){
+                
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
+        } finally {
+            // Asegúrate de cerrar los recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return ; // O podrías retornar un valor booleano
+
+        }
+     
+
+   
+}
 
 
 
