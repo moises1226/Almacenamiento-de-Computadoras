@@ -68,6 +68,14 @@ public class Controlador {
     private Text infoError;
     @FXML
     private Label tituloError;
+    @FXML
+    private Text textResponsable;
+    @FXML 
+    private Text textCurso;
+    @FXML
+    private Text textCarrito;
+    @FXML
+    private Text textComputadora;
 
 
     @FXML
@@ -90,8 +98,8 @@ public class Controlador {
             
             if(CB.length() != 16){
 
-            tituloError.setText("¡ERROR DE CARACTERES!");
-            infoError.setText("La cantidad de caracteres que ingreso como codigo de barras no es igual a 16");
+            tituloError.setText("¡ERROR!");
+            infoError.setText("El código de barras debe tener 16 caracteres.");
             panelError.setVisible(true);
 
             }else{
@@ -104,6 +112,7 @@ public class Controlador {
     
                     int d = Integer.parseInt(dni); 
                     AgregarUsuario(n, d, c );
+            
                     panelError.setVisible(false);
                     CodigoBarrasError.setVisible(false);
     
@@ -125,6 +134,21 @@ public class Controlador {
     }
 
 
+    private void MuestraDatos(){
+
+
+        
+
+        textResponsable.setText("");
+        textCurso.setText("");
+        nombre_Respo.clear();
+        Curso.clear();
+        Dni.clear();
+
+
+    }
+
+
 
     private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo ){
 
@@ -143,12 +167,10 @@ public class Controlador {
             pQuery.setString(1 , nRespo);
             pQuery.setInt(2,  dniRespo);
             pQuery.setString(3, cursoRespo);
-            
-
+        
             pQuery.executeUpdate();
             mostrarMensajeExito();
-
-
+          
         } catch (Exception e) {
             e.printStackTrace();
         }

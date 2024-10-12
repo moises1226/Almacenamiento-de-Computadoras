@@ -86,7 +86,7 @@
                </font>
             </Label>
 
-            <Pane fx:id="panelError" layoutX="436.0" layoutY="325.0" prefHeight="211.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
+            <Pane fx:id="panelError" layoutX="436.0" layoutY="325.0" prefHeight="211.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
                <children>
                   <Label fx:id="tituloError" layoutX="126.0" layoutY="14.0" text="¡ERROR!" textFill="RED">
                      <font>
