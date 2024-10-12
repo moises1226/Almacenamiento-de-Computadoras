@@ -161,16 +161,16 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Pane fx:id="CodigoBarrasError" layoutX="432.0" layoutY="350.0" prefHeight="161.0" prefWidth="380.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
+            <Pane fx:id="CodigoBarrasError" layoutX="432.0" layoutY="350.0" prefHeight="161.0" prefWidth="400.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
                <children>
-                  <Text fill="#ff0909" layoutX="87.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Error en busqueda!" wrappingWidth="219.0">
+                  <Text fill="#ff0909" layoutX="100.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error en busqueda" wrappingWidth="210.0">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="24.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EL codigo de barras que ingreso no esta registrado en la base de datos" wrappingWidth="331.9999999999999">
+                  <Text fill="WHITE" layoutX="35.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EL codigo de barras que ingreso no esta registrado en la base de datos" wrappingWidth="330.00">
                      <font>
-                        <Font size="21.0" />
+                        <Font size="20.0" />
                      </font>
                   </Text>
                </children>
