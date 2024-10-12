@@ -137,7 +137,6 @@ public class Controlador {
     private void MuestraDatos(){
 
 
-        
 
         textResponsable.setText("");
         textCurso.setText("");

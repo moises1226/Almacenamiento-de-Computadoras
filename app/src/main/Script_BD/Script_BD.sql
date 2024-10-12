@@ -11,7 +11,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE computadora (
     IdCompu INT AUTO_INCREMENT NOT NULL,
-    NroCompu SMALLINT UNIQUE NOT NULL,  -- Cambiado a SMALLINT
+    NroCompu SMALLINT UNIQUE NOT NULL,
     CodigoBarras VARCHAR(16) UNIQUE NOT NULL,
     PRIMARY KEY (IdCompu)
 );
