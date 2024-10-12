@@ -87,12 +87,12 @@
             </Label>
             <Pane fx:id="panelError" layoutX="436.0" layoutY="325.0" prefHeight="211.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;">
                <children>
-                  <Label layoutX="126.0" layoutY="14.0" text="¡ERROR!" textFill="RED">
+                  <Label fx:id="tituloError" layoutX="126.0" layoutY="14.0" text="¡ERROR!" textFill="RED">
                      <font>
                         <Font size="33.0" />
                      </font>
                   </Label>
-                  <Text fill="WHITE" layoutX="8.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los datos no fueron registrados correctamente por falta de datos en capos vacios." textAlignment="CENTER" wrappingWidth="355.3059997558594">
+                  <Text fx:id="infoError" fill="WHITE" layoutX="8.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los datos no fueron registrados correctamente por falta de datos en capos vacios." textAlignment="CENTER" wrappingWidth="355.3059997558594">
                      <font>
                         <Font name="Liberation Mono" size="20.0" />
                      </font>
