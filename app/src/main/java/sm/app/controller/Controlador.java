@@ -133,64 +133,50 @@ public class Controlador {
 
 
 
-   @FXML
-   private String VerificacionCodigoBarras(String codigoB) {
+    @FXML
+    private Boolean VerificacionCodigoBarras(String codigoB) {
     ConectorBaseDatos conexion = new ConectorBaseDatos();
-    Set<String> codigosBarras = new HashSet<>(); // Cambiar a HashSet
-
-    HashMap<Integer , String > numeroAndcodigo = new HashMap<>();
+    boolean bandera = false;    
     
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
 
+    try {
+        connection = conexion.getConexion();
+        
+        String query = "SELECT computadora.NroCompu, computadora.CodigoBarras, carrito.NroCarrito " + 
+                       "FROM carrito " + 
+                       "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
+
+        statement = connection.prepareStatement(query);
+        resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            String codigBarras = resultSet.getString("CodigoBarras");
+            
+            if (codigoB.equals(codigBarras)) {
+                bandera = true; // Se encontró el código de barras
+                break;
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("El código de barras que ingresó no existe: " + e.getMessage());
+    } finally {
         try {
-            connection = conexion.getConexion();
-            
-
-            String query = "SELECT computadora.NroCompu, computadora.CodigoBarras, carrito.NroCarrito " + 
-            "FROM carrito " + 
-            "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
-
-            statement = connection.prepareStatement(query);
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int nroCompu = resultSet.getInt("NroCompu");
-                String codigBarras = resultSet.getString("CodigoBarras");
-                int nroCarrito = resultSet.getInt("NroCarrito");
-                
-                numeroAndcodigo.put(nroCompu, codigBarras);
-            }
-
-            // Verificación
-            
-            for(int n : numeroAndcodigo.keySet()){
-                
-            }
-
-
-
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("El codigo de barras que ingeso no existe" + e.getMessage());
-        } finally {
-            // Asegúrate de cerrar los recursos
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return ; // O podrías retornar un valor booleano
-
         }
-     
+    }
 
-   
+    return bandera;
 }
+
 
 
 
