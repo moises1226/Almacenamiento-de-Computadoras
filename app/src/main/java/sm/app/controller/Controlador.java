@@ -77,19 +77,29 @@ public class Controlador {
         String dni = Dni.getText();
         String n = nombre_Respo.getText();
         String c = Curso.getText();
-        // String CB = codigoBarras.getText();
+        String CB = codigoBarras.getText();
         
 
-       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() ){
+       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() ||CB.isEmpty() ){
 
            panelError.setVisible(true);
 
        }else{
 
-           int d = Integer.parseInt(dni); 
+            boolean verificacion = VerificacionCodigoBarras(CB);
 
-           AgregarUsuario(n, d, c );
-           panelError.setVisible(false);
+            if(verificacion == true){
+
+                int d = Integer.parseInt(dni); 
+                AgregarUsuario(n, d, c );
+                panelError.setVisible(false);
+
+            }else{
+
+                
+
+            }
+           
 
         }
     }
