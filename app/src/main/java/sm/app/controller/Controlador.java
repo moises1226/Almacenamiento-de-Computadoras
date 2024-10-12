@@ -139,8 +139,8 @@ public class Controlador {
     boolean bandera = false;    
     
     Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
+    PreparedStatement ejecucion = null;
+    ResultSet resultado = null;
 
     try {
         connection = conexion.getConexion();
@@ -149,11 +149,11 @@ public class Controlador {
                        "FROM carrito " + 
                        "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
 
-        statement = connection.prepareStatement(query);
-        resultSet = statement.executeQuery();
+        ejecucion = connection.prepareStatement(query);
+        resultado = ejecucion.executeQuery();
 
-        while (resultSet.next()) {
-            String codigBarras = resultSet.getString("CodigoBarras");
+        while (resultado.next()) {
+            String codigBarras = resultado.getString("CodigoBarras");
             
             if (codigoB.equals(codigBarras)) {
                 bandera = true; // Se encontró el código de barras
@@ -166,8 +166,8 @@ public class Controlador {
         System.out.println("El código de barras que ingresó no existe: " + e.getMessage());
     } finally {
         try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
+            if (resultado != null) resultado.close();
+            if (ejecucion != null) resultado.close();
             if (connection != null) connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
