@@ -75,7 +75,7 @@ public class Controlador {
         String c = Curso.getText();
         String CB = codigoBarras.getText();
     
-        if (n.isEmpty() || c.isEmpty() || dni.isEmpty() || CB.isEmpty()) {
+        if (n.isEmpty() || c.isEmpty() || CB.isEmpty()) {
             tituloError.setText("!ERROR!");
             infoError.setText("Los datos no fueron registrados correctamente por falta de datos en campos vacíos.");
             panelError.setVisible(true);

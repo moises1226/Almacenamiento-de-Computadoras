@@ -239,17 +239,17 @@
                   <Image url="@iconos/puerta-cerrada-con-silueta-de-borde.png" />
                </image>
             </ImageView>
-            <Text layoutX="71.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de computadoras registradas" textAlignment="CENTER" wrappingWidth="205.0">
+            <Text layoutX="64.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de computadoras registradas" textAlignment="CENTER" wrappingWidth="205.0">
                <font>
                   <Font name="Microsoft JhengHei UI" size="27.0" />
                </font>
             </Text>
-            <ImageView fitHeight="30.0" fitWidth="54.0" layoutX="158.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="148.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@iconos/flecha-hacia-abajo.png" />
                </image>
             </ImageView>
-            <Text fx:id="textContador" fill="RED" layoutX="154.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
+            <Text fx:id="textContador" fill="RED" layoutX="148.0" layoutY="593.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
                <font>
                   <Font size="36.0" />
                </font>
