@@ -4,7 +4,7 @@ USE GuardadoDeBarras;
 CREATE TABLE usuario (
     IdUsuario INT AUTO_INCREMENT NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
-    DNI CHAR(8) UNIQUE,
+    DNI CHAR(8) ,
     Curso VARCHAR(10) NOT NULL,
     PRIMARY KEY (IdUsuario)
 );
