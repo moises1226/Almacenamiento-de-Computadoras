@@ -21,9 +21,6 @@ public final class ConectorBaseDatos {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("No se pudo conectar a la base de datos", e);
-            tituloError.setText("!ERROR!");
-            infoError.setText("El código de barras que ingresó no está registrado.");
-            panelError.setVisible(true);
         }
 
     }
