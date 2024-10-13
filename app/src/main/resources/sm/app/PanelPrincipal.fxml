@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btn_tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="201.0" layoutY="20.0" mnemonicParsing="false" onAction="#Mostrar_tabla" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: skyblue;" text="TABLA" textFill="WHITE">
+            <Button fx:id="btn_tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="201.0" layoutY="20.0" mnemonicParsing="false" onAction="#MostrarTabla" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: skyblue;" text="TABLA" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
