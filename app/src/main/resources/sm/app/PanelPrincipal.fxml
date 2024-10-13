@@ -22,7 +22,7 @@
    <children>
       <AnchorPane fx:id="PanelCabeza" layoutX="-14.0" prefHeight="115.0" prefWidth="866.0" style="-fx-background-color: beige;" stylesheets="@Panel.css">
          <children>
-            <Button fx:id="n" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="37.0" layoutY="20.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#registrar_Compu" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: skyblue;" text="RETIRAR" textFill="WHITE" wrapText="true">
+            <Button fx:id="n" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="37.0" layoutY="20.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#MostrarTabla" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: skyblue;" text="RETIRAR" textFill="WHITE" wrapText="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

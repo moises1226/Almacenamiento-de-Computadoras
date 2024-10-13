@@ -4,16 +4,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Usuario;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,28 +39,7 @@ public class Controlador {
     @FXML
     private TableView<Usuario> tabla;
 
-    @FXML
-    public void Mostrar_tabla(){
-        if(tabla.isVisible()){
-            tabla.setVisible(false);
-        }
-        else{
-            tabla.setVisible(true);
-            panel_Registro.setVisible(false);
-        }
-    }
-    @FXML
-    private AnchorPane panel_Registro;
-    @FXML
-    public void registrar_Compu(){
-        if(panel_Registro.isVisible()){
-            panel_Registro.setVisible(false);
-        }
-        else{
-            panel_Registro.setVisible(true);
-            tabla.setVisible(false);
-        }
-    }
+    
 
 
     @FXML
@@ -356,6 +341,7 @@ public class Controlador {
     @FXML
     private void GeneradorFechaHora(){
 
+
         LocalDateTime newFH = LocalDateTime.now();
 
         DateTimeFormatter formateoHF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -367,6 +353,33 @@ public class Controlador {
 
     }
 
+    @FXML
+    private void MostrarTabla(ActionEvent event) {
+        try {
+            // Cargar el nuevo archivo FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TablaVisual.fxml"));
+            Parent interfazTabla = loader.load();
+            
+            // Crear un nuevo Stage
+            Stage ventana = new Stage();
+            ventana.setTitle("Tabla de usuarios");
+            
+            // Crear una nueva escena
+            Scene Esena = new Scene(interfazTabla);
+            ventana.setScene(Esena);
+            
+            // Establecer el tamaño de la ventana
+            ventana.setWidth(800);
+            ventana.setHeight(800);
+            
+            // Mostrar el nuevo Stage
+            ventana.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
 
 
 
