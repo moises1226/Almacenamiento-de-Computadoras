@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sm.app.APP;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Usuario;
 
@@ -353,30 +354,49 @@ public class Controlador {
 
     }
 
+
+    @FXML
+    private Stage ventana ;
+
     @FXML
     private void MostrarTabla(ActionEvent event) {
         try {
+
+        
+            if (ventana == null || !ventana.isShowing()) {
             // Cargar el nuevo archivo FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TablaVisual.fxml"));
+            FXMLLoader loader = new FXMLLoader(APP.class.getResource("TablaVisual.fxml"));
             Parent interfazTabla = loader.load();
             
             // Crear un nuevo Stage
-            Stage ventana = new Stage();
+            ventana = new Stage();
             ventana.setTitle("Tabla de usuarios");
             
             // Crear una nueva escena
-            Scene Esena = new Scene(interfazTabla);
+            Scene Esena = new Scene(interfazTabla , 1182 , 680);
             ventana.setScene(Esena);
+            ventana.setResizable(false);
             
-            // Establecer el tamaño de la ventana
-            ventana.setWidth(800);
-            ventana.setHeight(800);
-            
-            // Mostrar el nuevo Stage
+
+
+            // Mostrar ventana
             ventana.show();
+        
+            
+        
+        }else {
+           
+            ventana.toFront();
+        }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    
+    
+    
+    
     }
     
     
