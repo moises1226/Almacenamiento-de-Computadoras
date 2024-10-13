@@ -23,6 +23,13 @@ import java.time.format.DateTimeFormatter;
 
 public class Controlador {
 
+
+    public void initialize() {
+        panelError.setVisible(false);
+        // incializarColumnas();
+        // CargarRegistro_tabla()
+    }
+
     @FXML
     private TableView<Usuario> tabla;
 
@@ -63,8 +70,6 @@ public class Controlador {
     @FXML
     private Pane panelError;
     @FXML
-    private Pane CodigoBarrasError;
-    @FXML
     private Text infoError;
     @FXML
     private Label tituloError;
@@ -77,174 +82,199 @@ public class Controlador {
     @FXML
     private Text textComputadora;
 
-
     @FXML
-    private void btnRegistrar(){
-
+    private void btnRegistrar() {
         String dni = Dni.getText();
         String n = nombre_Respo.getText();
         String c = Curso.getText();
         String CB = codigoBarras.getText();
+    
+        if (n.isEmpty() || c.isEmpty() || dni.isEmpty() || CB.isEmpty()) {
+            tituloError.setText("!ERROR!");
+            infoError.setText("Los datos no fueron registrados correctamente por falta de datos en campos vacíos.");
+            panelError.setVisible(true);
+        } else {
+            if (CB.length() != 16) {
+                tituloError.setText("¡ERROR!");
+                infoError.setText("El código de barras debe tener 16 caracteres.");
+                panelError.setVisible(true);
+            } else {
+                boolean verificacion = VerificacionCodigoBarras(CB);
+    
+                if (verificacion == true) {
+                    int d = Integer.parseInt(dni);
+                    AgregarUsuario(n, d, c);
+                    MuestraDatos(n, c, CB);
+                    panelError.setVisible(false);
         
 
-       if(n.isEmpty()  || c.isEmpty() || dni.isEmpty() ||CB.isEmpty() ){
-
-           tituloError.setText("!ERROR!");
-           infoError.setText("Los datos no fueron reguistrados correctamente por falta de datos en campos vacios.");
-           panelError.setVisible(true);
-
-       }else{
-
-            
-            if(CB.length() != 16){
-
-            tituloError.setText("¡ERROR!");
-            infoError.setText("El código de barras debe tener 16 caracteres.");
-            panelError.setVisible(true);
-
-            }else{
-
-                boolean verificacion = VerificacionCodigoBarras(CB);
-
-
-           
-                if(verificacion == true){
-    
-                    int d = Integer.parseInt(dni); 
-                    AgregarUsuario(n, d, c );
-            
-                    panelError.setVisible(false);
-                    CodigoBarrasError.setVisible(false);
-    
-                }else{
-    
+                } else {
                     tituloError.setText("!ERROR!");
-                    infoError.setText("El codigo de barras que ingreso no esta registrado");
+                    infoError.setText("El código de barras que ingresó no está registrado.");
                     panelError.setVisible(true);
-         
-    
                 }
-
-
-
             }
-           
-
         }
     }
-
-
-    private void MuestraDatos(){
-
-
-
-        textResponsable.setText("");
-        textCurso.setText("");
-        nombre_Respo.clear();
-        Curso.clear();
-        Dni.clear();
-
-
-    }
-
-
-
-    private void AgregarUsuario(String nRespo , int dniRespo , String cursoRespo ){
-
-
+    
+    
+    private void MuestraDatos(String nombre, String curso, String codBarras) {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
-
-        
+        String codigoBarrasResult = null;
+        String nroCarritoResult = null;
+        String nroComputadoraResult = null;
+        Connection connection = null;
+        PreparedStatement pQuery = null;
+        ResultSet resultSet = null;
+    
         try {
-            
+            connection = conexion.getConexion();
+    
+            String query = "SELECT computadora.CodigoBarras, computadora.NroCompu, carrito.NroCarrito " + 
+                           "FROM carrito " + 
+                           "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu " +
+                           "WHERE CodigoBarras = ?";
+    
+            pQuery = connection.prepareStatement(query);
+            pQuery.setString(1, codBarras);
+            resultSet = pQuery.executeQuery();
+    
+            if (resultSet.next()) {
+                codigoBarrasResult = resultSet.getString("CodigoBarras");
+                nroComputadoraResult = resultSet.getString("NroCompu");
+                nroCarritoResult = resultSet.getString("NroCarrito");
+    
+                textComputadora.setText(nroComputadoraResult);
+                textCarrito.setText(nroCarritoResult);
+                textResponsable.setText(nombre);
+                textCurso.setText(curso);
+                nombre_Respo.clear();
+                Curso.clear();
+                Dni.clear();
+                codigoBarras.clear();
+            }
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (pQuery != null) {
+                    pQuery.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 
+
+
+    private void AgregarUsuario(String nRespo, int dniRespo, String cursoRespo) {
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+    
+        try {
             Connection connection = conexion.getConexion();
-            
-            String query = "INSERT INTO usuario (Nombre ,  DNI , Curso ) VALUES ( ? , ? , ? ) "; 
+            String query = "INSERT INTO usuario (Nombre, DNI, Curso) VALUES (?, ?, ?)";
             PreparedStatement pQuery = connection.prepareStatement(query);
-
-            pQuery.setString(1 , nRespo);
-            pQuery.setInt(2,  dniRespo);
+    
+            pQuery.setString(1, nRespo);
+            pQuery.setInt(2, dniRespo);
             pQuery.setString(3, cursoRespo);
-        
+            
             pQuery.executeUpdate();
             mostrarMensajeExito();
-          
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
-
-
-
-
-
+    
 
 
 
     @FXML
     private Boolean VerificacionCodigoBarras(String codigoB) {
-    ConectorBaseDatos conexion = new ConectorBaseDatos();
-    boolean bandera = false;    
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+        boolean bandera = false;    
+        Connection connection = null;
+        PreparedStatement ejecucion = null;
+        ResultSet resultado = null;
     
-    Connection connection = null;
-    PreparedStatement ejecucion = null;
-    ResultSet resultado = null;
-
+        panelError.setVisible(false);
     
+        try {
+            connection = conexion.getConexion();
+            String query = "SELECT computadora.NroCompu, computadora.CodigoBarras, carrito.NroCarrito " + 
+                           "FROM carrito " + 
+                           "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
     
-       panelError.setVisible(false);
-
-    try {
-        connection = conexion.getConexion();
-        
-        String query = "SELECT computadora.NroCompu, computadora.CodigoBarras, carrito.NroCarrito " + 
-                       "FROM carrito " + 
-                       "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
-
-        ejecucion = connection.prepareStatement(query);
-        resultado = ejecucion.executeQuery();
-
-        while (resultado.next()) {
-            String codigBarras = resultado.getString("CodigoBarras");
-            
-            if (codigoB.equals(codigBarras)) {
-                bandera = true; // Se encontró el código de barras
-                break;
+            ejecucion = connection.prepareStatement(query);
+            resultado = ejecucion.executeQuery();
+    
+            while (resultado.next()) {
+                String codigBarras = resultado.getString("CodigoBarras");
+                if (codigoB.equals(codigBarras)) {
+                    bandera = true; // Se encontró el código de barras
+                    break;
+                }
+            }
+    
+        } catch (SQLException e) {
+            tituloError.setText("¡ERROR EN BD!");
+            infoError.setText("Error en la conexión o recopilación de datos de la base de datos.");
+            panelError.setVisible(true);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultado != null) resultado.close();
+                if (ejecucion != null) ejecucion.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-
-    } catch (SQLException e) {
-
-        tituloError.setText("¡ERROR EN BD!");
-        infoError.setText("Error en la conexion o recopilacion de datos de la base de datos ");
-        panelError.setVisible(true);
-
-        e.printStackTrace();
-    }finally {
-        try {
-            if (resultado != null) resultado.close();
-            if (ejecucion != null) ejecucion.close(); // Cambiado a ejecucion
-            if (connection != null) connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    
+        return bandera;
     }
-
     
 
-    return bandera;
-}
+    @FXML
+    private void AgregarDatosRetiro(){
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
     @FXML
     private Label TextoRegistrado;
-
-
     @FXML
     private void mostrarMensajeExito() {
         TextoRegistrado.setVisible(true);
@@ -268,18 +298,6 @@ public class Controlador {
     @FXML
     private TableColumn<Usuario, String> col7;
 
-
-
-
-    public void initialize() {
-
-        panelError.setVisible(false);
-        // incializarColumnas();
-        // CargarRegistro_tabla();
-
-
-
-    }
 
 
     public void incializarColumnas(){
