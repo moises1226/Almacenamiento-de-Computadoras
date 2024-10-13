@@ -75,7 +75,7 @@ public class Controlador {
         String c = Curso.getText();
         String CB = codigoBarras.getText();
     
-        if (n.isEmpty() || c.isEmpty() || CB.isEmpty()) {
+        if (n.isEmpty() || c.isEmpty() || CB.isEmpty() || dni.isEmpty()) {
             tituloError.setText("!ERROR!");
             infoError.setText("Los datos no fueron registrados correctamente por falta de datos en campos vacíos.");
             panelError.setVisible(true);
@@ -88,10 +88,23 @@ public class Controlador {
                 boolean verificacion = VerificacionCodigoBarras(CB);
     
                 if (verificacion == true) {
-                    int d = Integer.parseInt(dni);
-                    AgregarUsuario(n, d, c);
-                    MuestraDatos(n, c, CB);
-                    panelError.setVisible(false);
+
+                    if(dni.length() != 8){
+                        
+                        tituloError.setText("¡ERROR!");
+                        infoError.setText("El dni debe tener 8 caracteres");
+                        panelError.setVisible(true);
+    
+                    }else{
+
+                        int d = Integer.parseInt(dni);
+                   
+                        AgregarUsuario(n, d, c);
+                        MuestraDatos(n, c, CB);
+                        panelError.setVisible(false);
+                    }
+
+                
         
 
                 } else {
@@ -160,11 +173,14 @@ public class Controlador {
     }
     
 
-
+    @FXML
+    private Text textContador;
 
     private void AgregarUsuario(String nRespo, int dniRespo, String cursoRespo) {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
+        int contador = 0;
     
+
         try {
             Connection connection = conexion.getConexion();
             String query = "INSERT INTO usuario (Nombre, DNI, Curso) VALUES (?, ?, ?)";
@@ -175,6 +191,9 @@ public class Controlador {
             pQuery.setString(3, cursoRespo);
             
             pQuery.executeUpdate();
+            contador++;
+            String c = Integer.toString(contador);
+            textContador.setText(c);
             mostrarMensajeExito();
     
         } catch (Exception e) {
