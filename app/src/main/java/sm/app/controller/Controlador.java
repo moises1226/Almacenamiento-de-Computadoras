@@ -18,10 +18,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sm.app.APP;
 import sm.app.db.ConectorBaseDatos;
+import sm.app.model.Retiro;
 import sm.app.model.Usuario;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,16 +34,7 @@ import java.time.format.DateTimeFormatter;
 public class Controlador {
 
 
-    public void initialize() {
-        panelError.setVisible(false);
-        // incializarColumnas();
-        // CargarRegistro_tabla()
-    }
-
-    @FXML
-    private TableView<Usuario> tabla;
-
-    
+ 
 
 
     @FXML
@@ -219,7 +212,7 @@ public class Controlador {
     
             // Insertar en la tabla retiro
             if (idUsuarioGenerado > 0 && idCarrito > 0) {
-                String queryRetiro = "INSERT INTO retiro (IdUser, IdCarrito, Fecha, Descripcion) VALUES (?, ?, NOW(), ?)";
+                String queryRetiro = "INSERT INTO retiro (IdUser, IdCarrito, FechaRetiro, Descripcion) VALUES (?, ?, NOW(), ?)";
                 PreparedStatement pQueryRetiro = connection.prepareStatement(queryRetiro);
                 pQueryRetiro.setInt(1, idUsuarioGenerado);
                 pQueryRetiro.setInt(2, idCarrito);
@@ -300,20 +293,31 @@ public class Controlador {
     }
 
 
+
+
+
+
+    public void initialize() {
+        panelError.setVisible(false);
+        // incializarColumnas();
+        // CargarRegistro_tabla()
+    }
+
     @FXML
-    private TableColumn<Usuario, Integer> col1;
+    private TableColumn<Retiro, Integer> col1;
     @FXML
-    private TableColumn<Usuario, String> col2;
+    private TableColumn<Retiro, String> col2;
     @FXML
-    private TableColumn<Usuario, String> col3;
+    private TableColumn<Retiro, String> col3;
     @FXML
-    private TableColumn<Usuario, String> col4;
+    private TableColumn<Retiro, String> col4;
     @FXML
-    private TableColumn<Usuario, Long> col5;
+    private TableColumn<Retiro, Long> col5;
     @FXML
-    private TableColumn<Usuario, String> col6;
+    private TableColumn<Retiro, String> col6;
     @FXML
-    private TableColumn<Usuario, String> col7;
+    private TableColumn<Retiro, Date> col7;
+    
 
 
 
@@ -328,43 +332,46 @@ public class Controlador {
 
     }
 
-    // private void CargarRegistro_tabla(){
-
-    //     ConectorBaseDatos conexion = new ConectorBaseDatos();
-    //     int id = 0;
-
-    //     try {
-
-    //         Connection connection = conexion.getConexion();
-    //         String consult = "SELECT nombre, curso , nro_Compu, descripcion, nro_Carrito, entrega FROM Usuarios";
-    //         PreparedStatement consulta = connection.prepareStatement(consult);
-    //         ResultSet muestraResultado = consulta.executeQuery(consult);
-
-    //         ObservableList<Usuario> datos = FXCollections.observableArrayList();
-
-    //         while(muestraResultado.next()){
-    //             id++;
-    //             String nombre = muestraResultado.getString("nombre");
-    //             String curso = muestraResultado.getString("curso");
-    //             int nro_compu = muestraResultado.getInt("nro_Compu");
-    //             String descripcion = muestraResultado.getString("descripcion");
-    //             long nro_Carrito = muestraResultado.getLong("nro_Carrito");
-    //             String entrega = muestraResultado.getString("entrega");
-
-    //             datos.add(new Usuario(id,nombre, curso, nro_compu, descripcion, nro_Carrito, entrega));
-
-
-    //         }
-
-    //         tabla.setItems(datos);
-
-
-    //     }catch (SQLException e){
-    //         e.printStackTrace();
-    //         System.out.println("Error al mostrar datos");
-    //     }
-
-    // }
+    @FXML
+    private TableView<Retiro> tabla;
+    
+    private void CargarRegistro_tabla() {
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+        int id = 0;
+    
+        try {
+            Connection connection = conexion.getConexion();
+            String consult = "SELECT usuario.Nombre, usuario.Curso, usuario.DNI, computadora.NroCompu, carrito.NroCarrito, retiro.Descripcion, retiro.FechaRetiro " +
+                             "FROM retiro " +
+                             "INNER JOIN usuario ON retiro.IdUser = usuario.IdUsuario " +
+                             "INNER JOIN carrito ON retiro.IdCarrito = carrito.IdCarrito " +
+                             "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
+    
+            PreparedStatement consulta = connection.prepareStatement(consult);
+            ResultSet muestraResultado = consulta.executeQuery();
+    
+            ObservableList<Retiro> datos = FXCollections.observableArrayList();
+    
+            while (muestraResultado.next()) {
+                id++;
+                String nombre = muestraResultado.getString("Nombre");
+                String curso = muestraResultado.getString("Curso");
+                int nroCompu = muestraResultado.getInt("NroCompu");
+                String descripcion = muestraResultado.getString("Descripcion");
+                long nroCarrito = muestraResultado.getLong("NroCarrito");
+                Date fechaRetiro = muestraResultado.getDate("FechaRetiro");
+    
+                datos.add(new Retiro(id, nombre, curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
+            }
+    
+            tabla.setItems(datos);
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al mostrar datos");
+        }
+    }
+    
 
 
     @FXML

@@ -1,52 +1,57 @@
 package sm.app.model;
+
 import java.util.Date;
 
 public class Retiro {
-    private int idRetiro;
-    private int idUser;
-    private int idCarrito;
-    private Date fecha;
+    private int id;
+    private String nombre;
+    private String curso;
+    private int nroCompu;
     private String descripcion;
+    private long nroCarrito;
+    private Date fechaRetiro;
 
-    public Retiro(int idRetiro, int idUser, int idCarrito, Date fecha, String descripcion) {
-        this.idRetiro = idRetiro;
-        this.idUser = idUser;
-        this.idCarrito = idCarrito;
-        this.fecha = fecha;
+    public Retiro(int id, String nombre, String curso, int nroCompu, String descripcion, long nroCarrito, Date fechaRetiro) {
+        this.id = id;
+        this.nombre = nombre;
+        this.curso = curso;
+        this.nroCompu = nroCompu;
         this.descripcion = descripcion;
+        this.nroCarrito = nroCarrito;
+        this.fechaRetiro = fechaRetiro;
     }
 
     // Getters y Setters
-    public int getIdRetiro() {
-        return idRetiro;
+    public int getId() {
+        return id;
     }
 
-    public void setIdRetiro(int idRetiro) {
-        this.idRetiro = idRetiro;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getIdCarrito() {
-        return idCarrito;
+    public String getCurso() {
+        return curso;
     }
 
-    public void setIdCarrito(int idCarrito) {
-        this.idCarrito = idCarrito;
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public int getNroCompu() {
+        return nroCompu;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setNroCompu(int nroCompu) {
+        this.nroCompu = nroCompu;
     }
 
     public String getDescripcion() {
@@ -55,5 +60,21 @@ public class Retiro {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public long getNroCarrito() {
+        return nroCarrito;
+    }
+
+    public void setNroCarrito(long nroCarrito) {
+        this.nroCarrito = nroCarrito;
+    }
+
+    public Date getFechaRetiro() {
+        return fechaRetiro;
+    }
+
+    public void setFechaRetiro(Date fechaRetiro) {
+        this.fechaRetiro = fechaRetiro;
     }
 }
