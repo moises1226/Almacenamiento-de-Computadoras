@@ -11,18 +11,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1182.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView cacheShape="false" centerShape="false" focusTraversable="false" layoutX="233.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="949.0" scaleShape="false">
+      <TableView fx:id="tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="233.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="952.0" scaleShape="false">
          <columns>
-            <TableColumn editable="false" prefWidth="150.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Nombre" />
-            <TableColumn editable="false" prefWidth="122.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="DNI" />
-            <TableColumn editable="false" prefWidth="108.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Curso" />
-            <TableColumn editable="false" prefWidth="133.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Carrito" />
-            <TableColumn editable="false" prefWidth="121.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Compu" />
-            <TableColumn editable="false" prefWidth="157.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha retiro" />
-            <TableColumn editable="false" prefWidth="155.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha entraga" />
+            <TableColumn fx:id="col1" prefWidth="28.33331298828125" style="-fx-background-color: beige;" text="id" />
+            <TableColumn fx:id="col2" editable="false" prefWidth="140.66668701171875" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Nombre" />
+            <TableColumn fx:id="col3" editable="false" prefWidth="127.3333740234375" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Dni" />
+            <TableColumn fx:id="col4" editable="false" prefWidth="79.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Curso" />
+            <TableColumn fx:id="col5" editable="false" prefWidth="94.66668701171875" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Carrito" />
+            <TableColumn fx:id="col6" editable="false" prefWidth="89.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Computadora" />
+            <TableColumn fx:id="col7" prefWidth="168.0" style="-fx-background-color: beige;" text="Descripción" />
+            <TableColumn fx:id="col8" editable="false" prefWidth="128.3333740234375" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha retiro" />
+            <TableColumn fx:id="col9" editable="false" prefWidth="109.6666259765625" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha entraga" />
          </columns>
          <opaqueInsets>
             <Insets />
