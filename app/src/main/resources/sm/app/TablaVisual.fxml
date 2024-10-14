@@ -15,15 +15,15 @@
    <children>
       <TableView fx:id="tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="233.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="952.0" scaleShape="false">
          <columns>
-            <TableColumn fx:id="col1" prefWidth="28.33331298828125" style="-fx-background-color: beige;" text="id" />
-            <TableColumn fx:id="col2" editable="false" prefWidth="140.66668701171875" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Nombre" />
-            <TableColumn fx:id="col3" editable="false" prefWidth="127.3333740234375" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Dni" />
-            <TableColumn fx:id="col4" editable="false" prefWidth="79.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Curso" />
-            <TableColumn fx:id="col5" editable="false" prefWidth="94.66668701171875" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Carrito" />
-            <TableColumn fx:id="col6" editable="false" prefWidth="89.0" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Computadora" />
-            <TableColumn fx:id="col7" prefWidth="168.0" style="-fx-background-color: beige;" text="Descripción" />
-            <TableColumn fx:id="col8" editable="false" prefWidth="128.3333740234375" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha retiro" />
-            <TableColumn fx:id="col9" editable="false" prefWidth="109.6666259765625" resizable="false" sortable="false" style="-fx-background-color: beige;" text="Fecha entraga" />
+            <TableColumn fx:id="col1" prefWidth="28.33331298828125" text="id" />
+            <TableColumn fx:id="col2" editable="false" prefWidth="140.66668701171875" resizable="false" sortable="false" text="Nombre" />
+            <TableColumn fx:id="col3" editable="false" prefWidth="127.3333740234375" resizable="false" sortable="false" text="Dni" />
+            <TableColumn fx:id="col4" editable="false" prefWidth="79.0" resizable="false" sortable="false" text="Curso" />
+            <TableColumn fx:id="col5" editable="false" prefWidth="94.66668701171875" resizable="false" sortable="false" text="Carrito" />
+            <TableColumn fx:id="col6" editable="false" prefWidth="89.0" resizable="false" sortable="false" text="Computadora" />
+            <TableColumn fx:id="col7" prefWidth="168.0" text="Descripción" />
+            <TableColumn fx:id="col8" editable="false" prefWidth="128.3333740234375" resizable="false" sortable="false" text="Fecha retiro" />
+            <TableColumn fx:id="col9" editable="false" prefWidth="109.6666259765625" resizable="false" sortable="false" text="Fecha entraga" />
          </columns>
          <opaqueInsets>
             <Insets />

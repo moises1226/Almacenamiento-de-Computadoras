@@ -36,6 +36,7 @@ nro_compu {
     -fx-font-size: 14px;
     -fx-font-family: "Segoe UI Semibold";
     -fx-alignment: center;
+     -fx-text-fill: red;
 }
 
 

@@ -276,7 +276,12 @@ public class Controlador {
         return bandera;
     }
     
+<<<<<<< HEAD
    
+=======
+
+
+>>>>>>> 0fd2a51b681879671d74e309407e9fc14da9aac1
 
 
 
