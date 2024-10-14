@@ -276,11 +276,7 @@ public class Controlador {
         return bandera;
     }
     
-    public void initialize() {
-        panelError.setVisible(false);
-
-    }
-
+   
 
 
 
