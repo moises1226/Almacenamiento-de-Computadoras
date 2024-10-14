@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -51,5 +52,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
+      <Button fx:id="Ei" layoutX="1046.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="115.0" text="Eliminar" />
+      <Button fx:id="btnE" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="gh" />
    </children>
 </AnchorPane>
