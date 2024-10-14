@@ -52,7 +52,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="btnEliminarTodo" layoutX="1046.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="115.0" text="Eliminar todo" />
+      <Button fx:id="btnEliminarTodo" layoutX="1046.0"  onAction="#btnEliminarTodoAction"  layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="115.0" text="Eliminar todo" />
       <Button fx:id="btnEliminar"  layoutX="287.0" onAction="#eliminarCarrito" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Eliminar registros"  />
    </children>
 </AnchorPane>
