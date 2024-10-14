@@ -19,7 +19,7 @@ import javafx.util.Duration;
 import sm.app.APP;
 import sm.app.db.ConectorBaseDatos;
 import sm.app.model.Retiro;
-import sm.app.model.Usuario;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -299,8 +299,9 @@ public class Controlador {
 
     public void initialize() {
         panelError.setVisible(false);
-        // incializarColumnas();
-        // CargarRegistro_tabla()
+        CargarRegistro_tabla();
+        incializarColumnas();
+        
     }
 
     @FXML
@@ -325,10 +326,10 @@ public class Controlador {
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         col3.setCellValueFactory(new PropertyValueFactory<>("curso"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("nro_compu"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("nro_Carrito"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("nroCompu"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("nroCarrito"));
         col6.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("entrega"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("fechaRetiro"));
 
     }
 
@@ -355,13 +356,14 @@ public class Controlador {
             while (muestraResultado.next()) {
                 id++;
                 String nombre = muestraResultado.getString("Nombre");
+                int dni = muestraResultado.getInt("DNI");
                 String curso = muestraResultado.getString("Curso");
                 int nroCompu = muestraResultado.getInt("NroCompu");
                 String descripcion = muestraResultado.getString("Descripcion");
                 long nroCarrito = muestraResultado.getLong("NroCarrito");
                 Date fechaRetiro = muestraResultado.getDate("FechaRetiro");
     
-                datos.add(new Retiro(id, nombre, curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
+                datos.add(new Retiro(id, nombre, dni , curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
             }
     
             tabla.setItems(datos);

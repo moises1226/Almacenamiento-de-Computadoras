@@ -10,10 +10,12 @@ public class Retiro {
     private String descripcion;
     private long nroCarrito;
     private Date fechaRetiro;
+    private int dni;
 
-    public Retiro(int id, String nombre, String curso, int nroCompu, String descripcion, long nroCarrito, Date fechaRetiro) {
+    public Retiro(int id, String nombre , int dni, String curso, int nroCompu, String descripcion, long nroCarrito, Date fechaRetiro) {
         this.id = id;
         this.nombre = nombre;
+        this.dni = dni;
         this.curso = curso;
         this.nroCompu = nroCompu;
         this.descripcion = descripcion;
@@ -36,6 +38,14 @@ public class Retiro {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getCurso() {
