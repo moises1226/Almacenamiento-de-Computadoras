@@ -32,6 +32,7 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class Controlador {
@@ -441,15 +442,14 @@ public class Controlador {
     }
 
 
-
     @FXML
     private AnchorPane botonesCarrito;
+    @FXML
+    private Button btnEliminar; // Botón para eliminar el carrito seleccionado
+    private Long carritoSeleccionado; // Para almacenar el número de carrito seleccionado
     
     private void btnTablaCarrito() {
-    
         ConectorBaseDatos conexion = new ConectorBaseDatos();
-    
-        // Cambiamos de List a Set para eliminar duplicados
         Set<Long> carritos = new HashSet<>();
     
         try {
@@ -479,7 +479,7 @@ public class Controlador {
     
                 // Establecer el tamaño del botón
                 boton.setPrefWidth(210);  // Establecer ancho a 210 píxeles
-                boton.setPrefHeight(30);  // Puedes cambiar este valor para ajustar la altura
+                boton.setPrefHeight(30);   // Puedes cambiar este valor para ajustar la altura
     
                 // Añadir el botón al AnchorPane
                 botonesCarrito.getChildren().add(boton);
@@ -492,7 +492,10 @@ public class Controlador {
                 layoutY += 40;  // Ajusta este valor si quieres más o menos espacio entre los botones
     
                 // Añadir un EventHandler para manejar el clic del botón
-                boton.setOnAction(event -> CargarRegistro_tabla(nroCarrito));
+                boton.setOnAction(event -> {
+                    carritoSeleccionado = nroCarrito; // Guardar el número de carrito seleccionado
+                    mostrarMensaje("Seleccionado: " + carritoSeleccionado); // Mensaje opcional
+                });
             }
     
         } catch (SQLException e) {
@@ -501,19 +504,53 @@ public class Controlador {
         }
     }
     
-
+    // Método para eliminar el carrito seleccionado
+    @FXML
+    private void eliminarCarrito() {
+        if (carritoSeleccionado != null) { // Verificar que un carrito haya sido seleccionado
+            // Confirmar la eliminación
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación de eliminación");
+            alert.setHeaderText("Está a punto de eliminar el carrito: " + carritoSeleccionado);
+            Optional<ButtonType> resultado = alert.showAndWait();
     
-
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                // Eliminar de la base de datos
+                ConectorBaseDatos conexion = new ConectorBaseDatos();
+                try {
+                    Connection connection = conexion.getConexion();
+                    String consult = "DELETE FROM carrito WHERE NroCarrito = ?";
+                    PreparedStatement consulta = connection.prepareStatement(consult);
+                    consulta.setLong(1, carritoSeleccionado); // Establecer el número de carrito a eliminar
+    
+                    int filasAfectadas = consulta.executeUpdate();
+                    if (filasAfectadas > 0) {
+                        mostrarMensaje("Carrito eliminado con éxito.");
+                        btnTablaCarrito(); // Actualizar la lista de botones
+                    } else {
+                        mostrarMensaje("Error al eliminar el carrito.");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    mostrarMensaje("Error al eliminar el carrito: " + e.getMessage());
+                }
+            }
+        } else {
+            mostrarMensaje("Por favor, seleccione un carrito para eliminar.");
+        }
+    }
+    
+    // Método para mostrar mensajes (opcional)
+    private void mostrarMensaje(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
     
     
-
-
-
-
-    
-
-
-
+        
 
 
 
