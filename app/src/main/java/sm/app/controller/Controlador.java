@@ -22,6 +22,7 @@ import sm.app.model.Retiro;
 
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -30,8 +31,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Controlador {
 
@@ -303,7 +304,7 @@ public class Controlador {
     @FXML
     private TableColumn<Retiro, String> col2; // Nombre
     @FXML
-    private TableColumn<Retiro , Integer> col3 ;
+    private TableColumn<Retiro , Integer> col3 ; //dni
     @FXML
     private TableColumn<Retiro, String> col4; // Curso
     @FXML
@@ -313,20 +314,21 @@ public class Controlador {
     @FXML
     private TableColumn<Retiro, String> col7; // Descripcion
     @FXML
-    private TableColumn<Retiro, Date> col8; // FechaRetiro
+    private TableColumn<Retiro, Timestamp> col8; // FechaRetiro
     
 
     public void incializarColumnas() {
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("curso"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("nroCompu"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("nroCarrito"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("fechaRetiro"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("dni"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("nroCompu"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("nroCarrito"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("fechaRetiro"));
+        // col8.setCellValueFactory(new PropertyValueFactory<>(""));
     }
-    
-    private void CargarRegistro_tabla() {
+    private void CargarRegistro_tabla(long nroCarrito) {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
         int id = 0;
     
@@ -336,10 +338,12 @@ public class Controlador {
                              "FROM retiro " +
                              "INNER JOIN usuario ON retiro.IdUser = usuario.IdUsuario " +
                              "INNER JOIN carrito ON retiro.IdCarrito = carrito.IdCarrito " +
-                             "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu" +
-                             " where NroCarrito = ? ";
+                             "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu " +
+                             "WHERE carrito.NroCarrito = ?";  // Filtrar por el número de carrito
     
             PreparedStatement consulta = connection.prepareStatement(consult);
+            consulta.setLong(1, nroCarrito);  // Pasar el número de carrito como parámetro
+    
             ResultSet muestraResultado = consulta.executeQuery();
     
             ObservableList<Retiro> datos = FXCollections.observableArrayList();
@@ -351,8 +355,7 @@ public class Controlador {
                 String curso = muestraResultado.getString("Curso");
                 int nroCompu = muestraResultado.getInt("NroCompu");
                 String descripcion = muestraResultado.getString("Descripcion");
-                long nroCarrito = muestraResultado.getLong("NroCarrito");
-                Date fechaRetiro = muestraResultado.getDate("FechaRetiro");
+                Timestamp fechaRetiro = muestraResultado.getTimestamp("FechaRetiro");
     
                 datos.add(new Retiro(id, nombre, dni, curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
             }
@@ -364,6 +367,7 @@ public class Controlador {
             System.out.println("Error al mostrar datos");
         }
     }
+    
     
     
 
@@ -402,8 +406,8 @@ public class Controlador {
             Parent interfazTabla = loader.load();
             Controlador controlador = loader.getController();
             
-            controlador.incializarColumnas(); // Inicializar columnas
-            controlador.CargarRegistro_tabla(); 
+            controlador.incializarColumnas(); // Inicializar columnas 
+            controlador.btnTablaCarrito();
             
             // Crear un nuevo Stage
             ventana = new Stage();
@@ -437,47 +441,68 @@ public class Controlador {
     }
 
 
-    private void btnTablaCarrito(){
 
-
+    @FXML
+    private AnchorPane botonesCarrito;
+    
+    private void btnTablaCarrito() {
+    
         ConectorBaseDatos conexion = new ConectorBaseDatos();
-
-        List<Long> carritos = new ArrayList<>();
-
+    
+        // Cambiamos de List a Set para eliminar duplicados
+        Set<Long> carritos = new HashSet<>();
+    
         try {
             Connection connection = conexion.getConexion();
-            String consult = "SELECT carrito.NroCarrito " +
-                             "FROM carrito " ;
-    
+            String consult = "SELECT carrito.NroCarrito FROM carrito";
             PreparedStatement consulta = connection.prepareStatement(consult);
             ResultSet muestraResultado = consulta.executeQuery();
     
+            // Obtener todos los números de carrito y agregarlos al Set (evita duplicados)
             while (muestraResultado.next()) {
-            
                 long nroCarrito = muestraResultado.getLong("NroCarrito");
-                carritos.add(nroCarrito);
+                carritos.add(nroCarrito); // Al usar HashSet, solo se almacenan valores únicos
             }
-            
-
-            for(Long nroCarrito : carritos){
-
-
-
+    
+            // Limpiar los botones anteriores antes de agregar nuevos
+            botonesCarrito.getChildren().clear();
+    
+            // Variable para mantener el control de la posición vertical de los botones
+            double layoutY = 10.0;  // Empezar 10 píxeles desde la parte superior
+    
+            // Crear un botón por cada número de carrito único
+            for (Long nroCarrito : carritos) {
+                Button boton = new Button("Carrito " + nroCarrito);
+    
+                // Establecer un ID único para cada botón
+                boton.setId("carritoBtn_" + nroCarrito);
+    
+                // Establecer el tamaño del botón
+                boton.setPrefWidth(210);  // Establecer ancho a 210 píxeles
+                boton.setPrefHeight(30);  // Puedes cambiar este valor para ajustar la altura
+    
+                // Añadir el botón al AnchorPane
+                botonesCarrito.getChildren().add(boton);
+    
+                // Establecer la posición del botón
+                boton.setLayoutX(10);    // Posición X fija (10 píxeles desde la izquierda)
+                boton.setLayoutY(layoutY); // Posición Y variable, comenzando en 10 y aumentando
+    
+                // Incrementar la posición Y para el próximo botón
+                layoutY += 40;  // Ajusta este valor si quieres más o menos espacio entre los botones
+    
+                // Añadir un EventHandler para manejar el clic del botón
+                boton.setOnAction(event -> CargarRegistro_tabla(nroCarrito));
             }
-
-           
     
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error al mostrar datos");
         }
-
-
-
-    } 
+    }
+    
 
     
- 
 
     
     
