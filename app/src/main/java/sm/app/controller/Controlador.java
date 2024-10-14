@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -50,8 +51,6 @@ public class Controlador {
     @FXML
     private TextField nombre_Respo;
     @FXML
-    private TextArea CampoDescripcion;
-    @FXML
     private TextField codigoBarras;
     @FXML
     private Pane panelError;
@@ -67,6 +66,8 @@ public class Controlador {
     private Text textCarrito;
     @FXML
     private Text textComputadora;
+    @FXML
+    private TextArea CampoDescripcion;
 
     @FXML
     private void btnRegistrar() {
@@ -74,6 +75,7 @@ public class Controlador {
         String n = nombre_Respo.getText();
         String c = Curso.getText();
         String CB = codigoBarras.getText();
+        String descripcion = CampoDescripcion.getText();
     
         if (n.isEmpty() || c.isEmpty() || CB.isEmpty() || dni.isEmpty()) {
             tituloError.setText("!ERROR!");
@@ -99,7 +101,7 @@ public class Controlador {
 
                         int d = Integer.parseInt(dni);
                    
-                        AgregarUsuario(n, d, c);
+                        AgregarUsuarioEinsertarRetiro(n, d, c, CB , descripcion);
                         MuestraDatos(n, c, CB);
                         panelError.setVisible(false);
                     }
@@ -173,33 +175,68 @@ public class Controlador {
     }
     
 
-    @FXML
-    private Text textContador;
 
-    private void AgregarUsuario(String nRespo, int dniRespo, String cursoRespo) {
+    private void AgregarUsuarioEinsertarRetiro(String nRespo, int dniRespo, String cursoRespo, String codigoBarras, String descripcion) {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
-        int contador = 0;
     
-
         try {
             Connection connection = conexion.getConexion();
             String query = "INSERT INTO usuario (Nombre, DNI, Curso) VALUES (?, ?, ?)";
-            PreparedStatement pQuery = connection.prepareStatement(query);
-    
+            
+            // Preparar el statement con la opción para obtener las claves generadas
+            PreparedStatement pQuery = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pQuery.setString(1, nRespo);
             pQuery.setInt(2, dniRespo);
             pQuery.setString(3, cursoRespo);
             
+            // Ejecutar la inserción
             pQuery.executeUpdate();
-            contador++;
-            String c = Integer.toString(contador);
-            textContador.setText(c);
+            
+            // Obtener la ID generada
+            ResultSet generatedKeys = pQuery.getGeneratedKeys();
+            int idUsuarioGenerado = 0;
+            if (generatedKeys.next()) {
+                idUsuarioGenerado = generatedKeys.getInt(1); // Primera columna
+            }
+    
+            // Traer ID del carrito usando el código de barras
+            String query2 = "SELECT computadora.IdCompu, carrito.IdCarrito " +
+                            "FROM computadora " +
+                            "INNER JOIN carrito ON carrito.IdCompu = computadora.IdCompu " +
+                            "WHERE computadora.CodigoBarras = ?";
+
+            
+            PreparedStatement pQuery2 = connection.prepareStatement(query2);
+            pQuery2.setString(1, codigoBarras);
+            
+            ResultSet resultSetCarrito = pQuery2.executeQuery();
+            int idCarrito = 0;
+            if (resultSetCarrito.next()) {
+                idCarrito = resultSetCarrito.getInt("IdCarrito");
+            } else {
+                System.out.println("No se encontró un carrito para el código de barras proporcionado.");
+            }
+    
+            // Insertar en la tabla retiro
+            if (idUsuarioGenerado > 0 && idCarrito > 0) {
+                String queryRetiro = "INSERT INTO retiro (IdUser, IdCarrito, Fecha, Descripcion) VALUES (?, ?, NOW(), ?)";
+                PreparedStatement pQueryRetiro = connection.prepareStatement(queryRetiro);
+                pQueryRetiro.setInt(1, idUsuarioGenerado);
+                pQueryRetiro.setInt(2, idCarrito);
+                pQueryRetiro.setString(3, descripcion);
+                pQueryRetiro.executeUpdate();
+        
+            } else {
+                System.out.println("No se puede registrar el retiro. Verifique las IDs.");
+            }
+    
             mostrarMensajeExito();
     
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
     
 
 
@@ -249,31 +286,6 @@ public class Controlador {
         return bandera;
     }
     
-
-    @FXML
-    private void AgregarDatosRetiro(){
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
