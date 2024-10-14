@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -40,14 +39,14 @@
       </TableView>
       <ScrollPane layoutX="-3.0" prefHeight="680.0" prefWidth="237.0">
          <content>
-            <AnchorPane prefHeight="678.0" prefWidth="218.0">
+            <AnchorPane prefHeight="678.0" prefWidth="220.0">
                <children>
                   <Text layoutX="26.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CARRITOS" textAlignment="CENTER" wrappingWidth="183.9830722808838">
                      <font>
                         <Font name="Arial" size="34.0" />
                      </font>
                   </Text>
-                  <Button layoutX="2.0" layoutY="68.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="230.0" style="-fx-background-color: blue;" text="LISTA" textFill="WHITE" />
+                  <AnchorPane fx:id="botonesCarrito" layoutX="2.0" layoutY="68.0" prefHeight="609.0" prefWidth="217.0" />
                </children>
             </AnchorPane>
          </content>
