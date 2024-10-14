@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="1082.0" stylesheets="@Panel.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.app.Controlador">
+   <children>
+      <AnchorPane fx:id="panelBordeIzq" layoutX="1.0" onDragDetected="#Mostrar_tabla" prefHeight="687.0" prefWidth="179.0">
+         <children>
+            <Button cacheShape="false" centerShape="false" focusTraversable="false" layoutX="6.0" layoutY="239.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#registrar_Compu" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: blue;" text="INGRESAR" textFill="WHITE" wrapText="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@iconos/icons8-computer-24.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btn_tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="6.0" layoutY="354.0" mnemonicParsing="false" onAction="#Mostrar_tabla" prefHeight="68.0" prefWidth="146.0" scaleShape="false" style="-fx-background-color: blue;" text="TABLA" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="54.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@iconos/icons8-table-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="PanelCabeza" layoutX="1.0" prefHeight="115.0" prefWidth="1075.0" stylesheets="@Panel.css" />
+      <TableView fx:id="tabla" cacheHint="QUALITY" depthTest="ENABLE" focusTraversable="false" layoutX="163.0" layoutY="114.0" pickOnBounds="false" prefHeight="567.0" prefWidth="917.0" stylesheets="@Panel.css" visible="false">
+        <columns>
+          <TableColumn id="col1" fx:id="col1" prefWidth="30.0" text="ID" />
+          <TableColumn id="col2" fx:id="col2" editable="false" minWidth="0.0" prefWidth="124.0" sortable="false" text="Nombre" />
+            <TableColumn id="col4" fx:id="col3" editable="false" minWidth="0.0" prefWidth="52.0" sortable="false" text="Curso" />
+            <TableColumn id="col5" fx:id="col4" editable="false" prefWidth="170.0" sortable="false" text="N° Computadora" />
+            <TableColumn id="col6" fx:id="col5" editable="false" prefWidth="98.0" sortable="false" style="-fx-text-fill: red;" text="N° Carrito" />
+            <TableColumn id="col7" fx:id="col6" prefWidth="281.0" text="Descripcion" />
+            <TableColumn fx:id="col7" prefWidth="156.0" text="Retiro" />
+        </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <effect>
+            <Glow />
+         </effect>
+      </TableView>
+      <AnchorPane fx:id="panel_Registro" layoutX="163.0" layoutY="96.0" prefHeight="591.0" prefWidth="917.0" stylesheets="@Panel.css">
+         <children>
+            <TextArea fx:id="campo_Descripcion" layoutX="33.0" layoutY="382.0" prefHeight="164.0" prefWidth="308.0" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="nombre_Respo" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="54.0" pickOnBounds="false" prefHeight="49.0" prefWidth="257.0" scaleShape="false" stylesheets="@Panel.css">
+               <font>
+                  <Font size="19.0" />
+               </font></TextField>
+            <Spinner fx:id="nro_carrito" editable="true" focusTraversable="false" layoutX="696.0" layoutY="54.0" prefHeight="68.0" prefWidth="157.0" style="-fx-font-size: 20px;" stylesheets="@Panel.css" />
+            <Label layoutX="24.0" layoutY="17.0" prefHeight="37.0" prefWidth="266.0" text="Nombre del responsable:" textFill="WHITE">
+               <font>
+                  <Font name="Noto Sans Tifinagh Azawagh Regular" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="704.0" layoutY="21.0" prefHeight="30.0" prefWidth="125.0" text="Nro de Carrito" textFill="WHITE">
+               <font>
+                  <Font name="Noto Sans Osmanya Regular" size="18.0" />
+               </font></Label>
+            <Label layoutX="24.0" layoutY="111.0" prefHeight="28.0" prefWidth="68.0" text="Curso" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="curso" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="24.0" layoutY="136.0" pickOnBounds="false" prefHeight="37.0" prefWidth="109.0" scaleShape="false">
+               <font>
+                  <Font size="17.0" />
+               </font></TextField>
+            <Button fx:id="btn_enviar" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="525.0" layoutY="449.0" mnemonicParsing="false" onAction="#btn_Enviar" prefHeight="81.0" prefWidth="308.0" scaleShape="false" stylesheets="@Panel.css" text="Registrar" textFill="WHITE">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Spinner fx:id="nro_compu" editable="true" focusTraversable="false" layoutX="516.0" layoutY="54.0" prefHeight="68.0" prefWidth="163.0" style="-fx-font-size: 18;" stylesheets="@Panel.css" />
+            <Label layoutX="511.0" layoutY="17.0" prefHeight="37.0" prefWidth="173.0" text="Nro de computadora" textFill="WHITE">
+               <font>
+                  <Font name="Noto Sans Osmanya Regular" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="TextoEnviado" layoutX="593.0" layoutY="357.0" prefHeight="68.0" prefWidth="173.0" text="ENVIADO" textFill="#3ae800" visible="false">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Pane fx:id="panelError" layoutX="464.0" layoutY="182.0" prefHeight="132.0" prefWidth="372.0" style="-fx-background-color: black; -fx-background-radius: 10px;" visible="false">
+               <children>
+                  <Label layoutX="144.0" layoutY="8.0" text="¡ERROR!" textFill="RED">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los datos no fueron enviados correctamente por falta de datos en capos vacios" textAlignment="CENTER" wrappingWidth="355.3059997558594">
+                     <font>
+                        <Font name="Liberation Mono" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text fill="WHITE" layoutX="33.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion sobre la computadora" wrappingWidth="308.0">
+               <font>
+                  <Font name="Noto Sans Tifinagh Ghat Regular" size="19.0" />
+               </font>
+            </Text>
+            <Label layoutX="33.0" layoutY="196.0" prefHeight="28.0" prefWidth="125.0" text="Hora de Retiro" textFill="#fff4f4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button id="btnFH" layoutX="14.0" layoutY="224.0" mnemonicParsing="false" onAction="#GeneradorFechaHora" prefHeight="28.0" prefWidth="157.0" text="Fecha Hora">
+               <stylesheets>
+                  <URL value="@Panel.css" />
+                  <URL value="@Panel.css" />
+               </stylesheets></Button>
+            <Label fx:id="fechaHora" layoutX="25.0" layoutY="259.0" prefHeight="49.0" prefWidth="257.0" textAlignment="CENTER" textFill="#76faff">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
