@@ -142,10 +142,9 @@ public class Controlador {
                 textCarrito.setText(nroCarritoResult);
                 textResponsable.setText(nombre);
                 textCurso.setText(curso);
-                nombre_Respo.clear();
-                Curso.clear();
-                Dni.clear();
                 codigoBarras.clear();
+                CampoDescripcion.clear();
+                
             }
 
         } catch (Exception e) {
@@ -408,7 +407,12 @@ public class Controlador {
 
             controlador.incializarColumnas(); // Inicializar columnas
             controlador.btnTablaCarrito();
+<<<<<<< HEAD
 
+=======
+           
+            
+>>>>>>> 37a4465 (modif)
             // Crear un nuevo Stage
             ventana = new Stage();
             ventana.setTitle("Tabla de usuarios");
@@ -492,7 +496,15 @@ public class Controlador {
                 layoutY += 40;  // Ajusta este valor si quieres más o menos espacio entre los botones
 
                 // Añadir un EventHandler para manejar el clic del botón
+<<<<<<< HEAD
                 boton.setOnAction(event -> CargarRegistro_tabla(nroCarrito));
+=======
+                boton.setOnAction(event -> {
+                    carritoSeleccionado = nroCarrito; // Guardar el número de carrito seleccionado
+                    CargarRegistro_tabla(nroCarrito);
+                   
+                });
+>>>>>>> 37a4465 (modif)
             }
 
         } catch (SQLException e) {
@@ -500,9 +512,61 @@ public class Controlador {
             System.out.println("Error al mostrar datos");
         }
     }
+<<<<<<< HEAD
 
 
 
+=======
+    
+    // Método para eliminar el carrito seleccionado
+    @FXML
+    private void eliminarCarrito() {
+        if (carritoSeleccionado != null) { // Verificar que un carrito haya sido seleccionado
+            // Confirmar la eliminación
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación de eliminación");
+            alert.setHeaderText("Está a punto de eliminar los registros del carrito: " + carritoSeleccionado);
+            Optional<ButtonType> resultado = alert.showAndWait();
+    
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                // Eliminar de la base de datos
+                ConectorBaseDatos conexion = new ConectorBaseDatos();
+                try {
+                    Connection connection = conexion.getConexion();
+                    // Cambiar la consulta para eliminar de la tabla retiro
+                    String consult = "DELETE FROM retiro WHERE IdCarrito IN (SELECT IdCarrito FROM carrito WHERE NroCarrito = ?)";
+                    PreparedStatement consulta = connection.prepareStatement(consult);
+                    consulta.setLong(1, carritoSeleccionado); // Establecer el número de carrito a eliminar
+    
+                    int filasAfectadas = consulta.executeUpdate();
+                    if (filasAfectadas > 0) {
+                        mostrarMensaje("Registros del carrito eliminados con éxito.");
+                        btnTablaCarrito(); // Actualizar la lista de botones
+                    } else {
+                        mostrarMensaje("Error al eliminar los registros del carrito.");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    mostrarMensaje("Error al eliminar los registros del carrito: " + e.getMessage());
+                }
+            }
+        } else {
+            mostrarMensaje("Por favor, seleccione un carrito para eliminar.");
+        }
+    }
+    
+    // Método para mostrar mensajes (opcional)
+    private void mostrarMensaje(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    
+    
+        
+>>>>>>> 37a4465 (modif)
 
 
 
