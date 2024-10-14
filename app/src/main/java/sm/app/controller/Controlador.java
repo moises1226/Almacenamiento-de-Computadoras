@@ -30,6 +30,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controlador {
 
@@ -276,12 +278,7 @@ public class Controlador {
         return bandera;
     }
     
-<<<<<<< HEAD
    
-=======
-
-
->>>>>>> 0fd2a51b681879671d74e309407e9fc14da9aac1
 
 
 
@@ -339,7 +336,8 @@ public class Controlador {
                              "FROM retiro " +
                              "INNER JOIN usuario ON retiro.IdUser = usuario.IdUsuario " +
                              "INNER JOIN carrito ON retiro.IdCarrito = carrito.IdCarrito " +
-                             "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu";
+                             "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu" +
+                             " where NroCarrito = ? ";
     
             PreparedStatement consulta = connection.prepareStatement(consult);
             ResultSet muestraResultado = consulta.executeQuery();
@@ -438,6 +436,45 @@ public class Controlador {
     
     }
 
+
+    private void btnTablaCarrito(){
+
+
+        ConectorBaseDatos conexion = new ConectorBaseDatos();
+
+        List<Long> carritos = new ArrayList<>();
+
+        try {
+            Connection connection = conexion.getConexion();
+            String consult = "SELECT carrito.NroCarrito " +
+                             "FROM carrito " ;
+    
+            PreparedStatement consulta = connection.prepareStatement(consult);
+            ResultSet muestraResultado = consulta.executeQuery();
+    
+            while (muestraResultado.next()) {
+            
+                long nroCarrito = muestraResultado.getLong("NroCarrito");
+                carritos.add(nroCarrito);
+            }
+            
+
+            for(Long nroCarrito : carritos){
+
+
+
+            }
+
+           
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al mostrar datos");
+        }
+
+
+
+    } 
 
     
  
