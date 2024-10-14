@@ -34,9 +34,6 @@ import java.time.format.DateTimeFormatter;
 public class Controlador {
 
 
- 
-
-
     @FXML
     private TextField Curso;
     @FXML
@@ -279,6 +276,10 @@ public class Controlador {
         return bandera;
     }
     
+    public void initialize() {
+        panelError.setVisible(false);
+
+    }
 
 
 
@@ -292,37 +293,32 @@ public class Controlador {
         tempoAparecerDesaparecer.play();
     }
 
+  
 
 
 
-
-
-    public void initialize() {
-        panelError.setVisible(false);
-        CargarRegistro_tabla();
-        incializarColumnas();
-        
-    }
-
     @FXML
-    private TableColumn<Retiro, Integer> col1;
+    private TableView<Retiro> tabla;
+    
     @FXML
-    private TableColumn<Retiro, String> col2;
+    private TableColumn<Retiro, Integer> col1; // ID
     @FXML
-    private TableColumn<Retiro, String> col3;
+    private TableColumn<Retiro, String> col2; // Nombre
     @FXML
-    private TableColumn<Retiro, String> col4;
+    private TableColumn<Retiro , Integer> col3 ;
     @FXML
-    private TableColumn<Retiro, Long> col5;
+    private TableColumn<Retiro, String> col4; // Curso
     @FXML
-    private TableColumn<Retiro, String> col6;
+    private TableColumn<Retiro, Integer> col5; // NroCompu
     @FXML
-    private TableColumn<Retiro, Date> col7;
+    private TableColumn<Retiro, Long> col6; // NroCarrito
+    @FXML
+    private TableColumn<Retiro, String> col7; // Descripcion
+    @FXML
+    private TableColumn<Retiro, Date> col8; // FechaRetiro
     
 
-
-
-    public void incializarColumnas(){
+    public void incializarColumnas() {
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         col3.setCellValueFactory(new PropertyValueFactory<>("curso"));
@@ -330,11 +326,7 @@ public class Controlador {
         col5.setCellValueFactory(new PropertyValueFactory<>("nroCarrito"));
         col6.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         col7.setCellValueFactory(new PropertyValueFactory<>("fechaRetiro"));
-
     }
-
-    @FXML
-    private TableView<Retiro> tabla;
     
     private void CargarRegistro_tabla() {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
@@ -363,7 +355,7 @@ public class Controlador {
                 long nroCarrito = muestraResultado.getLong("NroCarrito");
                 Date fechaRetiro = muestraResultado.getDate("FechaRetiro");
     
-                datos.add(new Retiro(id, nombre, dni , curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
+                datos.add(new Retiro(id, nombre, dni, curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
             }
     
             tabla.setItems(datos);
@@ -374,7 +366,9 @@ public class Controlador {
         }
     }
     
+    
 
+    
 
     @FXML
     private Label fechaHora;
@@ -407,6 +401,10 @@ public class Controlador {
             // Cargar el nuevo archivo FXML
             FXMLLoader loader = new FXMLLoader(APP.class.getResource("TablaVisual.fxml"));
             Parent interfazTabla = loader.load();
+            Controlador controlador = loader.getController();
+            
+            controlador.incializarColumnas(); // Inicializar columnas
+            controlador.CargarRegistro_tabla(); 
             
             // Crear un nuevo Stage
             ventana = new Stage();
@@ -438,6 +436,11 @@ public class Controlador {
     
     
     }
+
+
+    
+ 
+
     
     
 
