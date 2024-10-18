@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\psarmiento20_12225\Desktop\Almacenamiento-de-Computadoras\app\out\artifacts\app_jar\app.jar</jar>
-  <outfile>C:\Users\psarmiento20_12225\Desktop\Almacenamiento-de-Computadoras\Guardado de Computadora.exe</outfile>
+  <jar>C:\Users\psarmiento20_12225\Desktop\Guardado de computadoras\app\out\artifacts\app_jar\app.jar</jar>
+  <outfile>C:\Users\psarmiento20_12225\Desktop\Guardado de computadoras\Guardado de computadora.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\psarmiento20_12225\Desktop\Almacenamiento-de-Computadoras\app\icono.ico</icon>
+  <icon>C:\Users\psarmiento20_12225\Desktop\Guardado de computadoras\app\icono.ico</icon>
   <jre>
     <path>%JAVA_HOME%;%PATH%</path>
     <requiresJdk>false</requiresJdk>
