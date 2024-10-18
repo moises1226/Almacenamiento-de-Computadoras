@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sm.app.APP;
 import sm.app.db.ConectorBaseDatos;
+import sm.app.db.RetiroDAO;
 import sm.app.model.Retiro;
 
 
@@ -320,6 +321,13 @@ public class Controlador {
     @FXML
     private TableColumn<Retiro, Boolean> col9; // FechaEntrega
 
+    private Connection connexion;
+
+    public Controlador() {
+        ConectorBaseDatos conector = new ConectorBaseDatos();
+        connexion = conector.getConexion(); // Obtener conexión
+    }
+
 
     public void incializarColumnas() {
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -350,19 +358,59 @@ public class Controlador {
                         setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                         setAlignment(Pos.CENTER);
 
-                        // Añadimos un listener para detectar el cambio de estado
                         checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-                            if (isSelected) {
-                                // Generar la fecha y hora al hacer clic en el CheckBox sin segundos
-                                LocalDateTime newFH = LocalDateTime.now();
-                                DateTimeFormatter formateoHF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                                String FH = newFH.format(formateoHF);
+                            // Obtener el objeto Retiro correspondiente a esta fila
+                            Retiro retiroSeleccionado = getTableView().getItems().get(getIndex());
 
-                                // Mostramos la fecha y hora en lugar del CheckBox
-                                labelFechaHora.setText(FH);
+                            if (isSelected) {
+                                // 1. Generar la fecha y hora actual
+                                LocalDateTime nuevaFechaHora = LocalDateTime.now();
+                                DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                                String fechaHoraFormateada = nuevaFechaHora.format(formato);
+
+                                // 2. Crear el DAO para realizar la inserción
+                                RetiroDAO retiroDAO = new RetiroDAO(connexion); // Asegúrate de tener la conexión adecuada
+
+                                // 3. Insertar la fecha de entrega en la base de datos
+                                retiroDAO.insertarFechaEntrega(retiroSeleccionado.getId(), java.sql.Timestamp.valueOf(nuevaFechaHora));
+
+                                // 4. Realizar una consulta para obtener la fecha de entrega usando el ID del retiro
+                                String query = "SELECT FechaEntrega FROM retiro WHERE IdRetiro = ?";
+                                LocalDateTime fechaEntrega = null; // Variable para almacenar la fecha de entrega
+
+                                try (PreparedStatement statement = connexion.prepareStatement(query)) {
+                                    statement.setInt(1, retiroSeleccionado.getId()); // Establecer el ID del retiro
+                                    ResultSet resultSet = statement.executeQuery();
+
+                                    if (resultSet.next()) {
+                                        // Guardar la fecha de entrega en la variable
+                                        fechaEntrega = resultSet.getTimestamp("FechaEntrega").toLocalDateTime(); // Convertir a LocalDateTime
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace(); // Manejo de excepciones
+                                }
+
+                                if (fechaEntrega != null) {
+                                    // Formatear la fecha de entrega para mostrarla
+                                    DateTimeFormatter formatoEntrega = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                                    String fechaEntregaFormateada = formatoEntrega.format(fechaEntrega);
+
+                                    // 5. Mostrar la fecha de entrega en el Label
+                                    labelFechaHora.setText(fechaEntregaFormateada);
+                                } else {
+                                    labelFechaHora.setText("Fecha de entrega no disponible");
+                                }
+
                                 setGraphic(labelFechaHora);
+                            } else {
+                                // Si el CheckBox se deselecciona, puedes manejarlo si es necesario
+                                setGraphic(checkBox);
+                                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                                setAlignment(Pos.CENTER);
                             }
                         });
+
+
                     }
                 }
             }
