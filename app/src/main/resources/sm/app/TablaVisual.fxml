@@ -15,12 +15,12 @@
    <children>
       <TableView fx:id="tabla" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="233.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="952.0" scaleShape="false">
          <columns>
-            <TableColumn fx:id="col1" prefWidth="28.33331298828125" text="id" />
+            <TableColumn fx:id="col1" prefWidth="28.33331298828125" text="ID" />
             <TableColumn fx:id="col2" editable="false" prefWidth="140.66668701171875" resizable="false" sortable="false" text="Nombre" />
             <TableColumn fx:id="col3" editable="false" prefWidth="127.3333740234375" resizable="false" sortable="false" text="Dni" />
             <TableColumn fx:id="col4" editable="false" prefWidth="67.0" resizable="false" sortable="false" text="Curso" />
-            <TableColumn fx:id="col5" editable="false" prefWidth="84.0" resizable="false" sortable="false" text="Carrito" />
-            <TableColumn fx:id="col6" editable="false" prefWidth="81.0" resizable="false" sortable="false" text="compu" />
+            <TableColumn fx:id="col5" editable="false" prefWidth="84.0" resizable="false" sortable="false" text="Compu" />
+            <TableColumn fx:id="col6" editable="false" prefWidth="81.0" resizable="false" sortable="false" text="Carrito" />
             <TableColumn fx:id="col7" prefWidth="158.0" text="Descripción" />
             <TableColumn fx:id="col8" editable="false" prefWidth="137.0" resizable="false" sortable="false" text="Fecha retiro" />
             <TableColumn fx:id="col9" editable="false" prefWidth="128.0" resizable="false" sortable="false" text="Fecha entraga" />
@@ -44,7 +44,7 @@
                <children>
                   <Text layoutX="26.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CARRITOS" textAlignment="CENTER" wrappingWidth="183.9830722808838">
                      <font>
-                        <Font name="Arial" size="34.0" />
+                        <Font name="Cascadia Code Regular" size="38.0" />
                      </font>
                   </Text>
                   <AnchorPane fx:id="botonesCarrito" layoutX="2.0" layoutY="68.0" prefHeight="609.0" prefWidth="217.0" />
@@ -52,7 +52,13 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="btnEliminarTodo" layoutX="1046.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEliminarTodoAction" prefHeight="32.0" prefWidth="115.0" text="Eliminar todo" />
-      <Button fx:id="btnEliminar" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#eliminarCarrito" prefHeight="25.0" prefWidth="157.0" text="Eliminar registros" />
+      <Button fx:id="btnEliminarTodo" layoutX="1046.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEliminarTodoAction" prefHeight="32.0" prefWidth="115.0" text="Eliminar todo">
+         <font>
+            <Font name="Cascadia Code Regular" size="11.0" />
+         </font></Button>
+      <Button fx:id="btnEliminar" layoutX="281.0" layoutY="9.0" mnemonicParsing="false" onAction="#eliminarCarrito" prefHeight="32.0" prefWidth="272.0" text="Eliminar registros de un carrito">
+         <font>
+            <Font name="Cascadia Code Regular" size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>
