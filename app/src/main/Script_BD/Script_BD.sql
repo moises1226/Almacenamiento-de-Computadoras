@@ -29,6 +29,7 @@ CREATE TABLE retiro (
     IdUser INT NOT NULL,
     IdCarrito INT NOT NULL,
     FechaRetiro DATETIME NOT NULL,
+    FeachaEntrega DATETIME ,
     Descripcion VARCHAR(100),
     PRIMARY KEY (IdRetiro),
     FOREIGN KEY (IdUser) REFERENCES usuario(IdUsuario),

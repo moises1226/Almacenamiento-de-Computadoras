@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -315,7 +316,10 @@ public class Controlador {
     private TableColumn<Retiro, String> col7; // Descripcion
     @FXML
     private TableColumn<Retiro, Timestamp> col8; // FechaRetiro
-    
+
+    @FXML
+    private TableColumn<Retiro, Boolean> col9; // FechaEntrega
+
 
     public void incializarColumnas() {
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -326,7 +330,48 @@ public class Controlador {
         col6.setCellValueFactory(new PropertyValueFactory<>("nroCarrito"));
         col7.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         col8.setCellValueFactory(new PropertyValueFactory<>("fechaRetiro"));
-        // col8.setCellValueFactory(new PropertyValueFactory<>(""));
+
+        col9.setCellFactory(tc -> new TableCell<Retiro, Boolean>() {
+            private final CheckBox checkBox = new CheckBox();
+            private final Label labelFechaHora = new Label();
+
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    if (checkBox.isSelected()) {
+                        // Si el CheckBox está seleccionado, generamos la fecha y la mostramos
+                        setGraphic(labelFechaHora);
+                    } else {
+                        setGraphic(checkBox);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        setAlignment(Pos.CENTER);
+
+                        // Añadimos un listener para detectar el cambio de estado
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                            if (isSelected) {
+                                // Generar la fecha y hora al hacer clic en el CheckBox sin segundos
+                                LocalDateTime newFH = LocalDateTime.now();
+                                DateTimeFormatter formateoHF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                                String FH = newFH.format(formateoHF);
+
+                                // Mostramos la fecha y hora en lugar del CheckBox
+                                labelFechaHora.setText(FH);
+                                setGraphic(labelFechaHora);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+
+
+
+
     }
     private void CargarRegistro_tabla(long nroCarrito) {
         ConectorBaseDatos conexion = new ConectorBaseDatos();
@@ -340,14 +385,14 @@ public class Controlador {
                              "INNER JOIN carrito ON retiro.IdCarrito = carrito.IdCarrito " +
                              "INNER JOIN computadora ON carrito.IdCompu = computadora.IdCompu " +
                              "WHERE carrito.NroCarrito = ?";  // Filtrar por el número de carrito
-    
+
             PreparedStatement consulta = connection.prepareStatement(consult);
             consulta.setLong(1, nroCarrito);  // Pasar el número de carrito como parámetro
-    
+
             ResultSet muestraResultado = consulta.executeQuery();
-    
+
             ObservableList<Retiro> datos = FXCollections.observableArrayList();
-    
+
             while (muestraResultado.next()) {
                 id++;
                 String nombre = muestraResultado.getString("Nombre");
@@ -356,10 +401,10 @@ public class Controlador {
                 int nroCompu = muestraResultado.getInt("NroCompu");
                 String descripcion = muestraResultado.getString("Descripcion");
                 Timestamp fechaRetiro = muestraResultado.getTimestamp("FechaRetiro");
-    
+
                 datos.add(new Retiro(id, nombre, dni, curso, nroCompu, descripcion, nroCarrito, fechaRetiro));
             }
-    
+
             tabla.setItems(datos);
     
         } catch (SQLException e) {
@@ -369,27 +414,9 @@ public class Controlador {
     }
     
     
-    
-
-    
-
-    @FXML
-    private Label fechaHora;
-
-    @FXML
-    private void GeneradorFechaHora(){
-
-
-        LocalDateTime newFH = LocalDateTime.now();
-
-        DateTimeFormatter formateoHF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String FH = newFH.format(formateoHF);
-
-        fechaHora.setText(FH);
 
 
 
-    }
 
 
     @FXML
